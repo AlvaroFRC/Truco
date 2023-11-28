@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Truco V 0.1</title>
+  </head>
+  <link rel="stylesheet" type="text/css" href="style.css" />
+  <body>
+    <h1></h1>
+    <script type="module" src="script.js"></script>
+    <link rel="shortcut icon" href="favicon.ico">
+    <button style="width: 150px; height: 40px" class="deal">
+      Reveal Cards
+    </button>
+    <button style="width: 150px; height: 40px" class="reset">
+      Reset
+    </button>
+    <button style="width: 150px; height: 40px" class="newGame">
+      New Game
+    </button>
+    <label class="timerLabel">Tiempo jugando: 00:00</label>
+
+    <table>
+      <thead>
+        <tr>
+          <td>    <table class="fullTable">
+            <thead>
+              <tr>
+                <th class="tableTittle" colspan="5">TRUCO</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="playerCards">
+                <td class="infoSlot p1back">Player one<br /></td>
+                <td class="playerOneTable" rowspan="3">
+                  <table>
+                    <thead>
+                      <tr>
+                        <button class="btn button1" data-roundCard="1" data-player="1">
+                          <img src="/assets/cards/zbackside.png" alt="Image 1" />
+                        </button>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <button class="btn button2" data-roundCard="2" data-player="1">
+                          <img src="/assets/cards/zbackside.png" alt="Image 2" />
+                        </button>
+                      </tr>
+                      <tr>
+                        <button class="btn button3" data-roundCard="3" data-player="1">
+                          <img src="/assets/cards/zbackside.png" alt="Image 3" />
+                        </button>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <br />
+                </td>
+                <td class="playTable" rowspan="3">
+                  <table class="tg">
+                    <thead>
+                      <tr>
+                        <th class="slotR1P1"><img src="/assets/cards/zbackside.png" alt="p1c1"></img></th>
+                        <th class="slotR1P2"><img src="/assets/cards/zbackside.png" alt="p2c1"></img></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td class="slotR2P1"><img src="/assets/cards/zbackside.png" alt="p1c2"></img></td>
+                        <td class="slotR2P2"><img src="/assets/cards/zbackside.png" alt="p2c2"></img></td>
+                      </tr>
+                      <tr>
+                        <td class="slotR3P1"><img src="/assets/cards/zbackside.png" alt="p1c3"></img></td>
+                        <td class="slotR3P2"><img src="/assets/cards/zbackside.png" alt="p2c3"></img></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </td>
+                <td class="playerTwoTable" rowspan="3">
+                  <table>
+                    <thead>
+                      <tr>
+                        <button class="btn button4" data-roundCard="1" data-player="2">
+                          <img src="/assets/cards/zbackside.png" alt="Image 4" />
+                        </button>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <button class="btn button5" data-roundCard="2" data-player="2">
+                          <img src="/assets/cards/zbackside.png" alt="Image 5" />
+                        </button>
+                      </tr>
+                      <tr>
+                        <button class="btn button6" data-roundCard="3" data-player="2">
+                          <img src="/assets/cards/zbackside.png" alt="Image 6" />
+                        </button>
+                      </tr>
+                    </tbody>
+                  </table>
+                </td>
+                <td class="infoSlot p2back">Player Two<br /></td>
+              </tr>
+              <tr>
+                <td class="infoSlot">
+                  <label class="scoreEnvido1">Envido: XX</label>
+                </td>
+                <td class="infoSlot">
+                  <label class="scoreEnvido2">Envido: XX</label>
+                </td>
+              </tr>
+              <tr class="game--buttons">
+                <td class="infoSlot">
+                  <div>Envido</div>
+                  <button style="width: 150px; height: 40px" class="btn envidoButtonP1">Envido!</button>
+                  <div>Truco</div>
+                  <button style="width: 150px; height: 40px" class="btn trucoButtonP1">Truco!</button>
+                  <button style="width: 150px; height: 40px" class="btn reTrucoButtonP1">Re truco!</button>
+                  <button style="width: 150px; height: 40px" class="btn valeCuatroButtonP1">Vale cuatro!</button>
+                  <div>Botones</div>
+                  <button style="width: 150px; height: 40px" class="btn acceptButtonP1">Quiero</button>    
+                  <button style="width: 150px; height: 40px" class="btn rejectButtonP1">No Quiero</button>
+                  <label class="pointsP1">Puntos: XX</label>
+                </td>
+                <td class="infoSlot">
+                  <div>Envido</div>
+                  <button style="width: 150px; height: 40px" class="btn envidoButtonP2">Envido!</button>
+                  <div>Truco</div>
+                  <button style="width: 150px; height: 40px" class="btn trucoButtonP2">Truco!</button>
+                  <button style="width: 150px; height: 40px" class="btn reTrucoButtonP2">Re truco!</button>
+                  <button style="width: 150px; height: 40px" class="btn valeCuatroButtonP2">Vale cuatro!</button>
+                  <div>Botones</div>
+                  <button style="width: 150px; height: 40px" class="btn acceptButtonP2">Quiero</button>    
+                  <button style="width: 150px; height: 40px" class="btn rejectButtonP2">No Quiero</button>
+                  <label class="pointsP2">Puntos: XX</label>
+              </tr>
+            </tbody>
+          </table></td>
+          <td class="actions">     
+            <div class="games">
+              <!-- items will be added here dynamically -->
+            </div>
+            <div class="movements">
+              <!-- items will be added here dynamically -->
+            </div>           
+          </td>
+        </tr>
+      </thead>
+      </table>
+
+
+
+
+    
+  </body>
+</html>
