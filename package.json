@@ -5,7 +5,7 @@
   "name": "trucowithparcel",
   "version": "0.0.1",
   "description": "test de truco",
-  "main": "script.js",
+  "default": "index.html",
   "devDependencies": {},
   "scripts": {
     "start": "parcel index.html",

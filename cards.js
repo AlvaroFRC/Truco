@@ -86,3 +86,23 @@ export {
   goldknight,
   goldking,
 };
+
+/* original json
+
+{
+  "dependencies": {
+    "parcel": "^2.10.3"
+  },
+  "name": "trucowithparcel",
+  "version": "0.0.1",
+  "description": "test de truco",
+  "main": "script.js",
+  "devDependencies": {},
+  "scripts": {
+    "start": "parcel index.html",
+    "build": "parcel build index.html"
+  },
+  "author": "",
+  "license": "ISC"
+}
+*/
