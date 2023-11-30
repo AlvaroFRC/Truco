@@ -608,12 +608,13 @@ const roundOne = function () {
   //Buttons are working good with envido
 
   envidoButtonP1.addEventListener("click", function () {
-    myView.displayCardsEvents(`Eh guashin`, "_");
+    myView.displayCardsEvents(`P1 Canto Envido`, "_");
 
     p1buttonsDisabler();
     p2buttonsDisabler(false, false, true, true, false, false);
 
     if (envidoCall) {
+      myView.displayCardsEvents(`P1 Canto Envido Envido`, "_");
       p1buttonsDisabler();
       p2buttonsDisabler(true, false, true, true, false, false);
     }
@@ -622,12 +623,13 @@ const roundOne = function () {
   });
 
   envidoButtonP2.addEventListener("click", function () {
-    myView.displayCardsEvents(`El pepe`, "EEEElll pepe");
+    myView.displayCardsEvents(`P2 Canto Envido`, "_");
 
     p1buttonsDisabler(false, false, true, true, false, false);
     p2buttonsDisabler();
 
     if (envidoCall) {
+      myView.displayCardsEvents(`P2 Canto Envido Envido`, "_");
       p1buttonsDisabler(true, false, true, true, false, false);
       p2buttonsDisabler();
     }
@@ -637,7 +639,7 @@ const roundOne = function () {
   });
 
   trucoButtonP1.addEventListener("click", function () {
-    console.log("P1 Call truco");
+    myView.displayCardsEvents(`P1 Canto Truco`, "_");
     p1buttonsDisabler();
     p2buttonsDisabler(true, true, false, true, false, false);
     switchPlayer();
@@ -645,7 +647,7 @@ const roundOne = function () {
   });
 
   trucoButtonP2.addEventListener("click", function () {
-    console.log("P2 Call truco");
+    myView.displayCardsEvents(`P2 Canto Truco`, "_");
     p1buttonsDisabler(true, true, false, true, false, false);
     p2buttonsDisabler();
     switchPlayer();
@@ -653,7 +655,7 @@ const roundOne = function () {
   });
 
   reTrucoButtonP1.addEventListener("click", function () {
-    console.log("P1 Call Re Truco");
+    myView.displayCardsEvents(`P1 Canto Retruco`, "_");
     p1buttonsDisabler();
     p2buttonsDisabler(true, true, true, false, false, false);
     switchPlayer();
@@ -661,7 +663,7 @@ const roundOne = function () {
   });
 
   reTrucoButtonP2.addEventListener("click", function () {
-    console.log("P2 Call Re Truco");
+    myView.displayCardsEvents(`P2 Canto Retruco`, "_");
     p1buttonsDisabler(true, true, true, false, false, false);
     p2buttonsDisabler();
     switchPlayer();
@@ -669,7 +671,7 @@ const roundOne = function () {
   });
 
   valeCuatroButtonP1.addEventListener("click", function () {
-    console.log("P1 Call Vale 4");
+    myView.displayCardsEvents(`P1 Canto Vale Cuatro`, "_");
     p1buttonsDisabler();
     p2buttonsDisabler(true, true, true, true, false, false);
     switchPlayer();
@@ -677,7 +679,7 @@ const roundOne = function () {
   });
 
   valeCuatroButtonP2.addEventListener("click", function () {
-    console.log("P2 Call Vale 4");
+    myView.displayCardsEvents(`P2 Canto Vale Cuatro`, "_");
     p1buttonsDisabler();
     p2buttonsDisabler(true, true, true, true, false, false);
     switchPlayer();
