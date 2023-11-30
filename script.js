@@ -241,7 +241,6 @@ const checkRightPlayer = function (current, player) {
   if (current === player) {
     //console.log("no tendria que cambiar");
   } else {
-    currentPlayer = currentPlayer === 1 ? 2 : 1;
     switchPlayer();
   }
 };
@@ -262,6 +261,9 @@ const startPlayTimer = function () {
 };
 
 const newGame = function () {
+  currentPlayer = Math.floor(Math.random() * 2) + 1;
+  switchPlayer();
+
   p1 = 1;
   p2 = 2;
   currentRound = 1;
@@ -282,25 +284,12 @@ const newGame = function () {
   reTrucoCall = false;
   valeCuatroCall = false;
 
-  currentPlayer = Math.floor(Math.random() * 2) + 1;
   dealCards();
   revealCards();
   if (timer) clearInterval(timer);
   timer = startPlayTimer();
 
-  currentPlayer === p2
-    ? ((envidoButtonP1.disabled = true), (trucoButtonP1.disabled = true))
-    : ((envidoButtonP2.disabled = true), (trucoButtonP2.disabled = true));
-
-  acceptButtonP1.disabled = true;
-  acceptButtonP2.disabled = true;
-  rejectButtonP1.disabled = true;
-  rejectButtonP2.disabled = true;
-
-  reTrucoButtonP1.disabled = true;
-  reTrucoButtonP2.disabled = true;
-  valeCuatroButtonP1.disabled = true;
-  valeCuatroButtonP2.disabled = true;
+  startingButtons(currentPlayer);
 
   btnP1card1.disabled = false;
   btnP1card2.disabled = false;
@@ -320,11 +309,60 @@ const newGame = function () {
   envidoScore1.textContent = `Envido : ${calcEnvido(player1Cards)}`;
   envidoScore2.textContent = `Envido : ${calcEnvido(player2Cards)}`;
 
-  switchPlayer();
   roundOne();
 };
 
 const nextRound = function () {
+  switchPlayer();
+
+  selectedCards = {};
+  player1Cards = {};
+  player2Cards = {};
+  p1card = 0;
+  p2card = 0;
+  p1points = 0;
+  p2points = 0;
+  timer;
+
+  p1RoundChoice = 0;
+  p2RoundChoice = 0;
+  currentRound = 1;
+  p1roundsWon = 0;
+  p2roundsWon = 0;
+
+  envidoCall = false;
+  envidoEnvidoCall = false;
+  acceptEnvido = false;
+  trucoCall = false;
+  reTrucoCall = false;
+  valeCuatroCall = false;
+
+  p1 = 1;
+  p2 = 2;
+
+  dealCards();
+  revealCards();
+  startingButtons(currentPlayer);
+
+  btnP1card1.disabled = false;
+  btnP1card2.disabled = false;
+  btnP1card3.disabled = false;
+  btnP2card1.disabled = false;
+  btnP2card2.disabled = false;
+  btnP2card3.disabled = false;
+
+  slotR1P1.querySelector("img").src = cards.zbackside;
+  slotR1P2.querySelector("img").src = cards.zbackside;
+  slotR2P1.querySelector("img").src = cards.zbackside;
+  slotR2P2.querySelector("img").src = cards.zbackside;
+  slotR3P1.querySelector("img").src = cards.zbackside;
+  slotR3P2.querySelector("img").src = cards.zbackside;
+
+  //Envido
+  envidoScore1.textContent = `Envido : ${calcEnvido(player1Cards)}`;
+  envidoScore2.textContent = `Envido : ${calcEnvido(player2Cards)}`;
+
+  roundOne();
   // ca a ser un call del round 3,
   // poner un timer.. mostrar resultado, mostrar quien gano, etc--
   // Inlcuye rehabilitar todas las cartas
@@ -363,6 +401,7 @@ const revealCards = function () {
 };
 
 const switchPlayer = function () {
+  currentPlayer = currentPlayer === 1 ? 2 : 1;
   if (currentPlayer === 1) {
     //console.log("al principio del switch()");
     //console.log(currentPlayer);
@@ -470,13 +509,52 @@ const switchPlayer = function () {
   //console.log(`Current Player: ${currentPlayer}`);
 };
 
+const p1buttonsDisabler = function (
+  envido = true,
+  truco = true,
+  retruco = true,
+  valecuatro = true,
+  accept = true,
+  reject = true
+) {
+  envidoButtonP1.disabled = envido;
+  trucoButtonP1.disabled = truco;
+  reTrucoButtonP1.disabled = retruco;
+  valeCuatroButtonP1.disabled = valecuatro;
+  acceptButtonP1.disabled = accept;
+  rejectButtonP1.disabled = reject;
+};
+
+const p2buttonsDisabler = function (
+  envido = true,
+  truco = true,
+  retruco = true,
+  valecuatro = true,
+  accept = true,
+  reject = true
+) {
+  envidoButtonP2.disabled = envido;
+  trucoButtonP2.disabled = truco;
+  reTrucoButtonP2.disabled = retruco;
+  valeCuatroButtonP2.disabled = valecuatro;
+  acceptButtonP2.disabled = accept;
+  rejectButtonP2.disabled = reject;
+};
+
+const startingButtons = function (activeplayer) {
+  if (activeplayer === 1) {
+    p1buttonsDisabler(false, false, true, true, true, true);
+    p2buttonsDisabler();
+  }
+  if (activeplayer === 2) {
+    p1buttonsDisabler();
+    p2buttonsDisabler(false, false, true, true, true, true);
+  }
+};
+
 const disableEnvidoButtons = function () {
-  envidoButtonP1.disabled = true;
-  envidoButtonP2.disabled = true;
-  acceptButtonP1.disabled = true;
-  acceptButtonP2.disabled = true;
-  rejectButtonP1.disabled = true;
-  rejectButtonP2.disabled = true;
+  p1buttonsDisabler(true, false, false, false, true, true);
+  p2buttonsDisabler(true, false, false, false, true, true);
 };
 
 class playerCardsClass {
@@ -508,19 +586,12 @@ class playerCardsClass {
         `${deck[cardChoice]["name"]}`
       );
 
-      currentPlayer = currentPlayer === 1 ? 2 : 1;
       switchPlayer();
 
       myView.displayCardsEvents(
         `Player ${player} used: `,
         getCardImagePath(`${deck[cardChoice]["name"]}`)
       );
-      // console.log(
-      //   "p1roundchoice:",
-      //   p1RoundChoice,
-      //   "p2roundchoice :",
-      //   p2RoundChoice
-      // );
     });
   }
 }
@@ -533,6 +604,164 @@ playerCardsButtons.clickHandler();
 
 const roundOne = function () {
   console.log("Round One Starts");
+
+  //Buttons are working good with envido
+
+  envidoButtonP1.addEventListener("click", function () {
+    myView.displayCardsEvents(`Eh guashin`, "_");
+
+    p1buttonsDisabler();
+    p2buttonsDisabler(false, false, true, true, false, false);
+
+    if (envidoCall) {
+      p1buttonsDisabler();
+      p2buttonsDisabler(true, false, true, true, false, false);
+    }
+    switchPlayer();
+    envidoCall = true;
+  });
+
+  envidoButtonP2.addEventListener("click", function () {
+    myView.displayCardsEvents(`El pepe`, "EEEElll pepe");
+
+    p1buttonsDisabler(false, false, true, true, false, false);
+    p2buttonsDisabler();
+
+    if (envidoCall) {
+      p1buttonsDisabler(true, false, true, true, false, false);
+      p2buttonsDisabler();
+    }
+    envidoCall = true;
+
+    switchPlayer();
+  });
+
+  trucoButtonP1.addEventListener("click", function () {
+    console.log("P1 Call truco");
+    p1buttonsDisabler();
+    p2buttonsDisabler(true, true, false, true, false, false);
+    switchPlayer();
+    trucoCall = true;
+  });
+
+  trucoButtonP2.addEventListener("click", function () {
+    console.log("P2 Call truco");
+    p1buttonsDisabler(true, true, false, true, false, false);
+    p2buttonsDisabler();
+    switchPlayer();
+    trucoCall = true;
+  });
+
+  reTrucoButtonP1.addEventListener("click", function () {
+    console.log("P1 Call Re Truco");
+    p1buttonsDisabler();
+    p2buttonsDisabler(true, true, true, false, false, false);
+    switchPlayer();
+    reTrucoCall = true;
+  });
+
+  reTrucoButtonP2.addEventListener("click", function () {
+    console.log("P2 Call Re Truco");
+    p1buttonsDisabler(true, true, true, false, false, false);
+    p2buttonsDisabler();
+    switchPlayer();
+    reTrucoCall = true;
+  });
+
+  valeCuatroButtonP1.addEventListener("click", function () {
+    console.log("P1 Call Vale 4");
+    p1buttonsDisabler();
+    p2buttonsDisabler(true, true, true, true, false, false);
+    switchPlayer();
+    valeCuatroCall = true;
+  });
+
+  valeCuatroButtonP2.addEventListener("click", function () {
+    console.log("P2 Call Vale 4");
+    p1buttonsDisabler();
+    p2buttonsDisabler(true, true, true, true, false, false);
+    switchPlayer();
+    valeCuatroCall = true;
+  });
+
+  acceptButtonP1.addEventListener("click", function () {
+    p1buttonsDisabler();
+
+    if (valeCuatroCall) {
+      console.log("vale aceptado");
+      p2buttonsDisabler(true, true, true, true, true, true);
+    }
+
+    if (reTrucoCall) {
+      p2buttonsDisabler(true, true, true, false, true, true);
+      console.log("retruco aceptado");
+    }
+
+    if (trucoCall) {
+      console.log("truco aceptado");
+      p2buttonsDisabler(true, true, false, true, true, true);
+    }
+
+    switchPlayer();
+
+    if (envidoEnvidoCall) {
+      acceptEnvido = true;
+      envidoEnvidoCall = true;
+      addEnvidoPoints();
+    } else if (envidoCall) {
+      acceptEnvido = true;
+      addEnvidoPoints();
+
+      switchPlayer();
+    }
+  });
+
+  acceptButtonP2.addEventListener("click", function () {
+    if (trucoCall || reTrucoCall || valeCuatroCall) {
+      switchPlayer();
+      console.log("truco aceptado");
+    }
+
+    if (envidoEnvidoCall) {
+      acceptEnvido = true;
+      envidoEnvidoCall = true;
+      addEnvidoPoints();
+    } else if (envidoCall) {
+      acceptEnvido = true;
+      addEnvidoPoints();
+
+      switchPlayer();
+    }
+    disableEnvidoButtons();
+  });
+
+  rejectButtonP1.addEventListener("click", function () {
+    if (envidoCall) p2points += 1;
+    if (envidoEnvidoCall) p2points += 1;
+    if (envidoCall) {
+      acceptEnvido = false;
+      envidoEnvidoCall = false;
+    } else if (envidoEnvidoCall) {
+      acceptEnvido = false;
+
+      switchPlayer();
+    }
+    disableEnvidoButtons();
+  });
+
+  rejectButtonP2.addEventListener("click", function () {
+    if (envidoCall) p1points += 1;
+    if (envidoEnvidoCall) p1points += 1;
+    if (envidoCall) {
+      acceptEnvido = false;
+      envidoEnvidoCall = false;
+    } else if (envidoEnvidoCall) {
+      switchPlayer();
+      acceptEnvido = false;
+    }
+    disableEnvidoButtons();
+  });
+
   // console.log(`current Player: ${currentPlayer}`);
   p1RoundChoice = 0;
   p2RoundChoice = 0;
@@ -560,113 +789,6 @@ const roundOne = function () {
       addEnvidoPoints();
     }
   };
-
-  //Buttons are working good with envido
-
-  envidoButtonP1.addEventListener("click", function () {
-    envidoButtonP1.disabled = true;
-    envidoButtonP2.disabled = false;
-    acceptButtonP2.disabled = false;
-    rejectButtonP2.disabled = false;
-
-    if (envidoCall) {
-      envidoEnvidoCall = true;
-      envidoButtonP1.disabled = true;
-      envidoButtonP2.disabled = true;
-      acceptButtonP1.disabled = true;
-      rejectButtonP1.disabled = true;
-    }
-    currentPlayer = currentPlayer === 1 ? 2 : 1;
-    switchPlayer();
-    envidoCall = true;
-  });
-
-  envidoButtonP2.addEventListener("click", function () {
-    envidoButtonP2.disabled = true;
-    envidoButtonP1.disabled = false;
-    acceptButtonP1.disabled = false;
-    rejectButtonP1.disabled = false;
-
-    if (envidoCall) {
-      envidoEnvidoCall = true;
-      envidoButtonP1.disabled = true;
-      envidoButtonP2.disabled = true;
-      acceptButtonP2.disabled = true;
-      rejectButtonP2.disabled = true;
-    }
-
-    envidoCall = true;
-    currentPlayer = currentPlayer === 1 ? 2 : 1;
-    switchPlayer();
-  });
-
-  acceptButtonP1.addEventListener("click", function () {
-    if (trucoCall || reTrucoCall || valeCuatroCall) {
-      currentPlayer = currentPlayer === 1 ? 2 : 1;
-      switchPlayer();
-      console.log("truco aceptado");
-    }
-
-    if (envidoEnvidoCall) {
-      acceptEnvido = true;
-      envidoEnvidoCall = true;
-      addEnvidoPoints();
-    } else if (envidoCall) {
-      acceptEnvido = true;
-      addEnvidoPoints();
-      currentPlayer = currentPlayer === 1 ? 2 : 1;
-      switchPlayer();
-    }
-    disableEnvidoButtons();
-  });
-
-  acceptButtonP2.addEventListener("click", function () {
-    if (trucoCall || reTrucoCall || valeCuatroCall) {
-      currentPlayer = currentPlayer === 1 ? 2 : 1;
-      switchPlayer();
-      console.log("truco aceptado");
-    }
-
-    if (envidoEnvidoCall) {
-      acceptEnvido = true;
-      envidoEnvidoCall = true;
-      addEnvidoPoints();
-    } else if (envidoCall) {
-      acceptEnvido = true;
-      addEnvidoPoints();
-      currentPlayer = currentPlayer === 1 ? 2 : 1;
-      switchPlayer();
-    }
-    disableEnvidoButtons();
-  });
-
-  rejectButtonP1.addEventListener("click", function () {
-    if (envidoCall) p2points += 1;
-    if (envidoEnvidoCall) p2points += 1;
-    if (envidoCall) {
-      acceptEnvido = false;
-      envidoEnvidoCall = false;
-    } else if (envidoEnvidoCall) {
-      acceptEnvido = false;
-      currentPlayer = currentPlayer === 1 ? 2 : 1;
-      switchPlayer();
-    }
-    disableEnvidoButtons();
-  });
-
-  rejectButtonP2.addEventListener("click", function () {
-    if (envidoCall) p1points += 1;
-    if (envidoEnvidoCall) p1points += 1;
-    if (envidoCall) {
-      acceptEnvido = false;
-      envidoEnvidoCall = false;
-    } else if (envidoEnvidoCall) {
-      currentPlayer = currentPlayer === 1 ? 2 : 1;
-      switchPlayer();
-      acceptEnvido = false;
-    }
-    disableEnvidoButtons();
-  });
 
   const checkRoundOne = function () {
     // Aca un if igual para detectar envido y truco
@@ -711,82 +833,6 @@ const roundOne = function () {
     }
   };
   // console.log("---------------------------------------------------------");
-
-  trucoButtonP1.addEventListener("click", function () {
-    console.log("P1 Call truco");
-    trucoButtonP1.disabled = true;
-    trucoButtonP2.disabled = true;
-    envidoButtonP1.disabled = true;
-    envidoButtonP2.disabled = true;
-    reTrucoButtonP2.disabled = false;
-    acceptButtonP2.disabled = false;
-    rejectButtonP2.disabled = false;
-    currentPlayer = currentPlayer === 1 ? 2 : 1;
-    switchPlayer();
-    trucoCall = true;
-  });
-
-  trucoButtonP2.addEventListener("click", function () {
-    console.log("P2 Call truco");
-    trucoButtonP1.disabled = true;
-    trucoButtonP2.disabled = true;
-    envidoButtonP1.disabled = true;
-    envidoButtonP2.disabled = true;
-    reTrucoButtonP1.disabled = false;
-    acceptButtonP1.disabled = false;
-    rejectButtonP1.disabled = false;
-    currentPlayer = currentPlayer === 1 ? 2 : 1;
-    switchPlayer();
-    trucoCall = true;
-  });
-
-  reTrucoButtonP1.addEventListener("click", function () {
-    console.log("P1 Call Re Truco");
-    reTrucoButtonP1.disabled = true;
-    reTrucoButtonP2.disabled = true;
-    acceptButtonP2.disabled = false;
-    rejectButtonP2.disabled = false;
-
-    valeCuatroButtonP2.disabled = false;
-    currentPlayer = currentPlayer === 1 ? 2 : 1;
-    switchPlayer();
-    reTrucoCall = true;
-  });
-
-  reTrucoButtonP2.addEventListener("click", function () {
-    console.log("P2 Call Re Truco");
-    reTrucoButtonP2.disabled = true;
-    reTrucoButtonP1.disabled = true;
-    valeCuatroButtonP1.disabled = false;
-    acceptButtonP1.disabled = false;
-    rejectButtonP1.disabled = false;
-    currentPlayer = currentPlayer === 1 ? 2 : 1;
-    switchPlayer();
-    reTrucoCall = true;
-  });
-
-  valeCuatroButtonP1.addEventListener("click", function () {
-    console.log("P1 Call Vale 4");
-    valeCuatroButtonP2.disabled = true;
-    valeCuatroButtonP1.disabled = true;
-    acceptButtonP2.disabled = false;
-    rejectButtonP2.disabled = false;
-    currentPlayer = currentPlayer === 1 ? 2 : 1;
-    switchPlayer();
-    valeCuatroCall = true;
-  });
-
-  valeCuatroButtonP2.addEventListener("click", function () {
-    console.log("P2 Call Vale 4");
-    valeCuatroButtonP1.disabled = true;
-    valeCuatroButtonP2.disabled = true;
-    acceptButtonP1.disabled = false;
-    rejectButtonP1.disabled = false;
-    currentPlayer = currentPlayer === 1 ? 2 : 1;
-    switchPlayer();
-    valeCuatroCall = true;
-  });
-
   // Assign the interval ID to roundOneTimer
   roundOneTimer = setInterval(checkRoundOne, 10);
   // Call the function to start checking variables
@@ -858,21 +904,21 @@ const roundThree = function () {
           `*** El Player${currentPlayer} gano tercera`,
           currentPlayer
         );
-        newGame();
+        nextRound();
       }
       if (winner === p1) {
         console.log("Gana el Player: 1");
         console.log("Round Three ends");
         myView.displayRoundEvents(`*** El Player 1 gano tercera ***`);
         myView.displayGamesEvents("*** El Player 1 gano en tercera ***", 1);
-        newGame();
+        nextRound();
       }
       if (winner === p2) {
         console.log("Gana el Player: 2");
         console.log("Round Three ends");
         myView.displayRoundEvents(`*** El Player 2 gano tercera ***`);
         myView.displayGamesEvents("*** El Player 2 gano en tercera ***", 2);
-        newGame();
+        nextRound();
       }
     }
   };
@@ -897,7 +943,7 @@ const roundThree = function () {
       : myView.displayGamesEvents(`** El Player 2 gano en segunda **`, 2);
 
     clearInterval(roundThreeTimer);
-    newGame();
+    nextRound();
   }
 
   if (p1roundsWon === 11 || p2roundsWon === 11) {
@@ -918,7 +964,7 @@ const roundThree = function () {
       : myView.displayGamesEvents(`** El Player 2 gano en segunda **`, 2);
 
     clearInterval(roundThreeTimer);
-    newGame();
+    nextRound();
   }
 
   if (p1roundsWon === 6 || p2roundsWon === 6) {
@@ -939,7 +985,7 @@ const roundThree = function () {
       : myView.displayGamesEvents(`** El Player 2 gano en segunda **`, 2);
 
     clearInterval(roundThreeTimer);
-    newGame();
+    nextRound();
   }
 
   if (p1roundsWon === 1 && p2roundsWon === 1) {
@@ -962,38 +1008,11 @@ btnReset.addEventListener("click", roundOne);
 btnNewGame.addEventListener("click", newGame);
 newGame();
 
-// TODO Acomodar la variable newGame para que contenga todo lo necesario para empezar desde 0
-
-// TODO Implementar la funcion del truco
-/*
-Tiene que funcionar con 3 opciones de call como las de envido, tal vez sea mejor dejarlas afuera del los rounds, por que eso se usaria del round 1 en adelante y se peude modificar en cualquier momento, controlar la funcion de los switchs de los botones de truco.. hasta ahora solo tengo el switch en new game, que le desactiva el boton al player inactivo
-
-/* 
-    let truco;
-    let retruco;
-    let valeCuatro;
-
-    aceptButtonP2.addEventListener("click", function () {
-      if (truco) {
-        trucoPoints = true
-        if (retruco) {
-          retrucoPoints = true
-          if (valeCuatro) {
-          valecuatroPoints = true
-          cambiar valor de valeCuatro a true= y depsues calcular los valores con ese true, asi no se abusa el boton de accept para sumar puntos
-        }
-      }
-    });
-*/
-
 // TODO Implementar el contador de puntos
 
 /*Estoy ya esta implementado y funciona con el envido, lo unico que necesiot tener en ucenta es que newGame no me lo sobreescriba, y que next round siga sumando al contador de puntos
 
 // TODO Implementar el nextRound que mantenga los puntos y contador y reinicie todos los parametros, como newGame, pero sin reiniciar los puntos
-
-//
-
 
 // TODO Mejorar la UI
 // TODO Label que muestre lo que esta pasando en cada accion*/

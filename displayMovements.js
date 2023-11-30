@@ -13,6 +13,7 @@ export default class View {
 
       if (mov["round"] === true && mov["card2"] !== undefined) {
         round = `<img src="${mov["card1"]}" alt="round card" class="smallImage">  VS  <img src="${mov["card2"]}" alt="round card" class="smallImage">`;
+        //Esto lo voy a cambiar, y que si esta en esas condiciones, saque la foto desde las jugadas,
       }
       if (mov["round"] === true && mov["card2"] === undefined) {
         round = ``;
