@@ -8,8 +8,10 @@ export default class View {
 
     const movs = movements;
 
-    movs.forEach((mov) => {
+    movs.forEach((mov, i, arr) => {
       let round = "";
+
+      console.log("arr", arr);
 
       if (mov["round"] === true && mov["card2"] !== undefined) {
         round = `<img src="${mov["card1"]}" alt="round card" class="smallImage">  VS  <img src="${mov["card2"]}" alt="round card" class="smallImage">`;
@@ -22,6 +24,10 @@ export default class View {
         round = `<img src="${mov["cardname"]}" alt="round card" class="smallImage"> 
         `;
       }
+      if (mov["round"] === "action") {
+        round = ``;
+      }
+
       const html = `
           <div class="movements__row">
           <div class="movements__value">${mov["info"]}</div>
@@ -36,6 +42,15 @@ export default class View {
     let round = false;
     // Create an object with info and cardname properties
     const event = { info, round, cardname };
+    // Push the object to the gameEvents array
+    gameEvents.push(event);
+    this.generateMarkup(gameEvents);
+  };
+
+  displayEnvidoTrucoEvents = function (info) {
+    let round = "action";
+    // Create an object with info and cardname properties
+    const event = { info, round };
     // Push the object to the gameEvents array
     gameEvents.push(event);
     this.generateMarkup(gameEvents);

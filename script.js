@@ -14,24 +14,21 @@ const btnP1card3 = document.querySelector(".button3");
 const btnP2card1 = document.querySelector(".button4");
 const btnP2card2 = document.querySelector(".button5");
 const btnP2card3 = document.querySelector(".button6");
-
-//actions buttons
-//Envido
+//Envido buttons
 const envidoButtonP1 = document.querySelector(".envidoButtonP1");
 const envidoButtonP2 = document.querySelector(".envidoButtonP2");
-//Truco
+//Truco buttons
 const trucoButtonP1 = document.querySelector(".trucoButtonP1");
 const trucoButtonP2 = document.querySelector(".trucoButtonP2");
 const reTrucoButtonP1 = document.querySelector(".reTrucoButtonP1");
 const reTrucoButtonP2 = document.querySelector(".reTrucoButtonP2");
 const valeCuatroButtonP1 = document.querySelector(".valeCuatroButtonP1");
 const valeCuatroButtonP2 = document.querySelector(".valeCuatroButtonP2");
-// Accept and Reject
+// Accept and Reject buttons
 const acceptButtonP1 = document.querySelector(".acceptButtonP1");
 const acceptButtonP2 = document.querySelector(".acceptButtonP2");
 const rejectButtonP1 = document.querySelector(".rejectButtonP1");
 const rejectButtonP2 = document.querySelector(".rejectButtonP2");
-
 //table cards
 const slotR1P1 = document.querySelector(".slotR1P1");
 const slotR1P2 = document.querySelector(".slotR1P2");
@@ -39,10 +36,7 @@ const slotR2P1 = document.querySelector(".slotR2P1");
 const slotR2P2 = document.querySelector(".slotR2P2");
 const slotR3P1 = document.querySelector(".slotR3P1");
 const slotR3P2 = document.querySelector(".slotR3P2");
-
-// labels
-
-// points
+// points labels
 const envidoScore1 = document.querySelector(".scoreEnvido1");
 const envidoScore2 = document.querySelector(".scoreEnvido2");
 //envido labels
@@ -211,27 +205,17 @@ const highestEnvido = function (p1, p2) {
   if (Number(p1) > Number(p2)) {
     return 1;
   } else return 2;
-  //
 };
 
 const checkRoundWinner = function (cardp1, cardp2) {
   // Checks the valuew of the card selection for each player and returns the winner, P1=1, P2=2, Draw=3
   if (player1Cards[cardp1].score === player2Cards[cardp2].score) {
-    // console.log("checkroundwinner: ", player1Cards[cardp1].score);
-    // console.log("checkroundwinner: ", player2Cards[cardp2].score);
-    // console.log("las cartas son iguales");
     return 3;
   }
   if (player1Cards[cardp1].score > player2Cards[cardp2].score) {
-    // console.log("checkroundwinner: ", player1Cards[cardp1].score);
-    // console.log("checkroundwinner: ", player2Cards[cardp2].score);
-    // console.log("gana player 1");
     return 1;
   }
   if (player1Cards[cardp1].score < player2Cards[cardp2].score) {
-    // console.log("checkroundwinner: ", player1Cards[cardp1].score);
-    // console.log("checkroundwinner: ", player2Cards[cardp2].score);
-    // console.log("gane player 2");
     return 2;
   }
 };
@@ -239,7 +223,6 @@ const checkRoundWinner = function (cardp1, cardp2) {
 const checkRightPlayer = function (current, player) {
   //Checks if the current player its the player that won the round, if thats correct, doesnt change, else, switchs
   if (current === player) {
-    //console.log("no tendria que cambiar");
   } else {
     switchPlayer();
   }
@@ -262,54 +245,16 @@ const startPlayTimer = function () {
 
 const newGame = function () {
   currentPlayer = Math.floor(Math.random() * 2) + 1;
-  switchPlayer();
 
-  p1 = 1;
-  p2 = 2;
-  currentRound = 1;
-  selectedCards = {};
-  player1Cards = {};
-  player2Cards = {};
-  p1card = 0;
-  p2card = 0;
-  p1RoundChoice = 0;
-  p2RoundChoice = 0;
-  p1roundsWon = 0;
-  p2roundsWon = 0;
   p1points = 0;
   p2points = 0;
-  envidoCall = false;
-  envidoEnvidoCall = false;
-  trucoCall = false;
-  reTrucoCall = false;
-  valeCuatroCall = false;
 
-  dealCards();
-  revealCards();
   if (timer) clearInterval(timer);
   timer = startPlayTimer();
 
-  startingButtons(currentPlayer);
+  // Hacer un clear de los movimientos y rounds
 
-  btnP1card1.disabled = false;
-  btnP1card2.disabled = false;
-  btnP1card3.disabled = false;
-  btnP2card1.disabled = false;
-  btnP2card2.disabled = false;
-  btnP2card3.disabled = false;
-
-  slotR1P1.querySelector("img").src = cards.zbackside;
-  slotR1P2.querySelector("img").src = cards.zbackside;
-  slotR2P1.querySelector("img").src = cards.zbackside;
-  slotR2P2.querySelector("img").src = cards.zbackside;
-  slotR3P1.querySelector("img").src = cards.zbackside;
-  slotR3P2.querySelector("img").src = cards.zbackside;
-
-  //Envido
-  envidoScore1.textContent = `Envido : ${calcEnvido(player1Cards)}`;
-  envidoScore2.textContent = `Envido : ${calcEnvido(player2Cards)}`;
-
-  roundOne();
+  nextRound();
 };
 
 const nextRound = function () {
@@ -320,9 +265,6 @@ const nextRound = function () {
   player2Cards = {};
   p1card = 0;
   p2card = 0;
-  p1points = 0;
-  p2points = 0;
-  timer;
 
   p1RoundChoice = 0;
   p2RoundChoice = 0;
@@ -363,13 +305,6 @@ const nextRound = function () {
   envidoScore2.textContent = `Envido : ${calcEnvido(player2Cards)}`;
 
   roundOne();
-  // ca a ser un call del round 3,
-  // poner un timer.. mostrar resultado, mostrar quien gano, etc--
-  // Inlcuye rehabilitar todas las cartas
-  // Hacer el active player el contrario de la vez anterior
-  // reacomodar todas las imagenes del mazo
-  // sumar los puntos, revisar si se llego a 15, si no se llego, empezar la ronda de nuevo desde round 1
-  // poner los contadores temporales del round en 0
 };
 
 function getCardImagePath(cardName) {
@@ -419,34 +354,33 @@ const switchPlayer = function () {
     btnP2card2.disabled = true;
     btnP2card3.disabled = true;
     //envidos
-    const backside = window.location.origin + "/assets/cards/zbackside.png";
 
     // Revisa que si el boton ya fue apretado (atravez del img source, lo mantenga deshabilitado)
-    if (btnP1card1.querySelector("img").src === backside) {
+    if (btnP1card1.querySelector("img").src.includes("backside")) {
       btnP1card1.disabled = true;
     }
     btnP1card1.disabled = btnP1card1.disabled === true ? true : false;
 
-    if (btnP1card2.querySelector("img").src === backside) {
+    if (btnP1card2.querySelector("img").src.includes("backside")) {
       btnP1card2.disabled = true;
     }
     btnP1card2.disabled = btnP1card2.disabled === true ? true : false;
 
-    if (btnP1card3.querySelector("img").src === backside) {
+    if (btnP1card3.querySelector("img").src.includes("backside")) {
       btnP1card3.disabled = true;
     }
     btnP1card3.disabled = btnP1card3.disabled === true ? true : false;
 
-    if (btnP2card1.querySelector("img").src === backside) {
+    if (btnP2card1.querySelector("img").src.includes("backside")) {
       btnP2card1.disabled = true;
     }
     btnP2card1.disabled = btnP2card1.disabled === true ? true : false;
 
-    if (btnP2card2.querySelector("img").src === backside) {
+    if (btnP2card2.querySelector("img").src.includes("backside")) {
       btnP2card2.disabled = true;
     }
     btnP2card2.disabled = btnP2card2.disabled === true ? true : false;
-    if (btnP2card3.querySelector("img").src === backside) {
+    if (btnP2card3.querySelector("img").src.includes("backside")) {
       btnP2card3.disabled = true;
     }
     btnP2card3.disabled = btnP2card3.disabled === true ? true : false;
@@ -469,34 +403,33 @@ const switchPlayer = function () {
     //envidos
     // const original.. no funcionaba por el relative path.. usaba ip
     //const backside = "http://127.0.0.1:5501/assets/cards/zbackside.png";
-    const backside = window.location.origin + "/assets/cards/zbackside.png";
 
     // Revisa que si el boton ya fue apretado (atravez del img source, lo mantenga deshabilitado)
-    if (btnP1card1.querySelector("img").src === backside) {
+    if (btnP1card1.querySelector("img").src.includes("backside")) {
       btnP1card1.disabled = true;
     }
     btnP1card1.disabled = btnP1card1.disabled === true ? true : false;
 
-    if (btnP1card2.querySelector("img").src === backside) {
+    if (btnP1card2.querySelector("img").src.includes("backside")) {
       btnP1card2.disabled = true;
     }
     btnP1card2.disabled = btnP1card2.disabled === true ? true : false;
 
-    if (btnP1card3.querySelector("img").src === backside) {
+    if (btnP1card3.querySelector("img").src.includes("backside")) {
       btnP1card3.disabled = true;
     }
     btnP1card3.disabled = btnP1card3.disabled === true ? true : false;
 
-    if (btnP2card1.querySelector("img").src === backside) {
+    if (btnP2card1.querySelector("img").src.includes("backside")) {
       btnP2card1.disabled = true;
     }
     btnP2card1.disabled = btnP2card1.disabled === true ? true : false;
 
-    if (btnP2card2.querySelector("img").src === backside) {
+    if (btnP2card2.querySelector("img").src.includes("backside")) {
       btnP2card2.disabled = true;
     }
     btnP2card2.disabled = btnP2card2.disabled === true ? true : false;
-    if (btnP2card3.querySelector("img").src === backside) {
+    if (btnP2card3.querySelector("img").src.includes("backside")) {
       btnP2card3.disabled = true;
     }
     btnP2card3.disabled = btnP2card3.disabled === true ? true : false;
@@ -600,169 +533,212 @@ const playerCardsButtons = new playerCardsClass();
 
 playerCardsButtons.clickHandler();
 
+envidoButtonP1.addEventListener("click", function () {
+  if (envidoCall) {
+    myView.displayEnvidoTrucoEvents(`P1 Canto Envido Envido`);
+    p1buttonsDisabler();
+    p2buttonsDisabler(true, false, true, true, false, false);
+    envidoEnvidoCall = true;
+  } else {
+    myView.displayEnvidoTrucoEvents(`P1 Canto Envido`);
+    p1buttonsDisabler();
+    p2buttonsDisabler(false, false, true, true, false, false);
+    envidoCall = true;
+  }
+  switchPlayer();
+});
+
+envidoButtonP2.addEventListener("click", function () {
+  if (envidoCall) {
+    myView.displayEnvidoTrucoEvents(`P2 Canto Envido Envido`);
+    p1buttonsDisabler(true, false, true, true, false, false);
+    p2buttonsDisabler();
+    envidoEnvidoCall = true;
+  } else {
+    myView.displayEnvidoTrucoEvents(`P2 Canto Envido`);
+    p1buttonsDisabler(false, false, true, true, false, false);
+    p2buttonsDisabler();
+    envidoCall = true;
+  }
+  switchPlayer();
+});
+
+trucoButtonP1.addEventListener("click", function () {
+  myView.displayEnvidoTrucoEvents(`P1 Canto Truco`);
+  p1buttonsDisabler();
+  p2buttonsDisabler(true, true, false, true, false, false);
+  switchPlayer();
+  trucoCall = true;
+});
+
+trucoButtonP2.addEventListener("click", function () {
+  myView.displayEnvidoTrucoEvents(`P2 Canto Truco`);
+  p1buttonsDisabler(true, true, false, true, false, false);
+  p2buttonsDisabler();
+  switchPlayer();
+  trucoCall = true;
+});
+
+reTrucoButtonP1.addEventListener("click", function () {
+  myView.displayEnvidoTrucoEvents(`P1 Canto Retruco`);
+  p1buttonsDisabler();
+  p2buttonsDisabler(true, true, true, false, false, false);
+  switchPlayer();
+  reTrucoCall = true;
+});
+
+reTrucoButtonP2.addEventListener("click", function () {
+  myView.displayEnvidoTrucoEvents(`P2 Canto Retruco`);
+  p1buttonsDisabler(true, true, true, false, false, false);
+  p2buttonsDisabler();
+  switchPlayer();
+  reTrucoCall = true;
+});
+
+valeCuatroButtonP1.addEventListener("click", function () {
+  myView.displayEnvidoTrucoEvents(`P1 Canto Vale Cuatro`);
+  p1buttonsDisabler(true, true, true, true, false, false);
+  p2buttonsDisabler();
+  switchPlayer();
+  valeCuatroCall = true;
+});
+
+valeCuatroButtonP2.addEventListener("click", function () {
+  myView.displayEnvidoTrucoEvents(`P2 Canto Vale Cuatro`);
+  p1buttonsDisabler(true, true, true, true, false, false);
+  p2buttonsDisabler();
+  switchPlayer();
+  valeCuatroCall = true;
+});
+
+acceptButtonP1.addEventListener("click", function () {
+  p1buttonsDisabler();
+
+  if (valeCuatroCall) {
+    myView.displayEnvidoTrucoEvents("P1 vale aceptado");
+    p2buttonsDisabler(true, true, true, true, true, true);
+    switchPlayer();
+  } else if (reTrucoCall) {
+    p2buttonsDisabler(true, true, true, false, true, true);
+    myView.displayEnvidoTrucoEvents("retruco aceptado");
+  } else if (trucoCall) {
+    myView.displayEnvidoTrucoEvents("truco aceptado");
+    p2buttonsDisabler(true, true, false, true, true, true);
+    switchPlayer();
+  }
+
+  if (envidoEnvidoCall) {
+    //myView.displayEnvidoTrucoEvents("acepto envido envido");
+    acceptEnvido = true;
+    addEnvidoPoints();
+  } else if (envidoCall) {
+    //myView.displayEnvidoTrucoEvents("acepto envido");
+    acceptEnvido = true;
+    addEnvidoPoints();
+    switchPlayer();
+  }
+});
+
+acceptButtonP2.addEventListener("click", function () {
+  p1buttonsDisabler();
+
+  if (valeCuatroCall) {
+    myView.displayEnvidoTrucoEvents("vale aceptado");
+    p2buttonsDisabler(true, true, true, true, true, true);
+    switchPlayer();
+  } else if (reTrucoCall) {
+    p2buttonsDisabler(true, true, true, false, true, true);
+    myView.displayEnvidoTrucoEvents("retruco aceptado");
+  } else if (trucoCall) {
+    myView.displayEnvidoTrucoEvents("truco aceptado");
+    p2buttonsDisabler(true, true, false, true, true, true);
+    switchPlayer();
+  }
+
+  if (envidoEnvidoCall) {
+    myView.displayEnvidoTrucoEvents("acepto envido envido");
+    acceptEnvido = true;
+    addEnvidoPoints();
+  } else if (envidoCall) {
+    myView.displayEnvidoTrucoEvents("acepto envido");
+    acceptEnvido = true;
+    addEnvidoPoints();
+    switchPlayer();
+  }
+});
+
+rejectButtonP1.addEventListener("click", function () {
+  p1buttonsDisabler();
+
+  if (valeCuatroCall) {
+    myView.displayEnvidoTrucoEvents(`P1 rechazo el Vale 4`);
+    myView.displayGamesEvents(`** El Player 2 gano por rechazo **`, 2);
+    p2points += 3;
+    nextRound();
+  } else if (reTrucoCall) {
+    myView.displayEnvidoTrucoEvents(`P1 rechazo el Retruco`);
+    myView.displayGamesEvents(`** El Player 2 gano por rechazo **`, 2);
+    p2points += 2;
+    nextRound();
+  } else if (trucoCall) {
+    myView.displayEnvidoTrucoEvents(`P1 rechazo el Truco`);
+    myView.displayGamesEvents(`** El Player 2 gano por rechazo **`, 2);
+    p2points += 1;
+    nextRound();
+  }
+
+  if (envidoEnvidoCall) {
+    myView.displayEnvidoTrucoEvents(`P1 rechazo el Envido Envido`);
+    acceptEnvido = false;
+    p2points += 2;
+    p2buttonsDisabler(true, false, true, true, true, true);
+  } else if (envidoCall) {
+    myView.displayEnvidoTrucoEvents(`P1 rechazo el Envido`);
+    acceptEnvido = false;
+    p2points += 1;
+    p2buttonsDisabler(true, false, true, true, true, true);
+    switchPlayer();
+  }
+});
+
+rejectButtonP2.addEventListener("click", function () {
+  p2buttonsDisabler();
+
+  if (valeCuatroCall) {
+    myView.displayCardsEvents(`P2 rechazo el Vale 4`, "_");
+    myView.displayGamesEvents(`** El Player 1 gano por rechazo **`, 1);
+    p1points += 3;
+    nextRound();
+  } else if (reTrucoCall) {
+    myView.displayCardsEvents(`P2 rechazo el Retruco`, "_");
+    myView.displayGamesEvents(`** El Player 1 gano por rechazo **`, 1);
+    p1points += 2;
+    nextRound();
+  } else if (trucoCall) {
+    myView.displayCardsEvents(`P2 rechazo el Truco`, "_");
+    myView.displayGamesEvents(`** El Player 1 gano por rechazo **`, 1);
+    p1points += 1;
+    nextRound();
+  }
+
+  if (envidoEnvidoCall) {
+    myView.displayCardsEvents(`P2 rechazo el Envido Envido`, "_");
+    acceptEnvido = false;
+    p1points += 2;
+    p1buttonsDisabler(true, false, true, true, true, true);
+  } else if (envidoCall) {
+    myView.displayCardsEvents(`P2 rechazo el Envido`, "_");
+    acceptEnvido = false;
+    p1points += 1;
+    p2buttonsDisabler(true, false, true, true, true, true);
+    switchPlayer();
+  }
+});
+
 // Game Rounds
 
 const roundOne = function () {
   console.log("Round One Starts");
-
-  //Buttons are working good with envido
-
-  envidoButtonP1.addEventListener("click", function () {
-    myView.displayCardsEvents(`P1 Canto Envido`, "_");
-
-    p1buttonsDisabler();
-    p2buttonsDisabler(false, false, true, true, false, false);
-
-    if (envidoCall) {
-      myView.displayCardsEvents(`P1 Canto Envido Envido`, "_");
-      p1buttonsDisabler();
-      p2buttonsDisabler(true, false, true, true, false, false);
-    }
-    switchPlayer();
-    envidoCall = true;
-  });
-
-  envidoButtonP2.addEventListener("click", function () {
-    myView.displayCardsEvents(`P2 Canto Envido`, "_");
-
-    p1buttonsDisabler(false, false, true, true, false, false);
-    p2buttonsDisabler();
-
-    if (envidoCall) {
-      myView.displayCardsEvents(`P2 Canto Envido Envido`, "_");
-      p1buttonsDisabler(true, false, true, true, false, false);
-      p2buttonsDisabler();
-    }
-    envidoCall = true;
-
-    switchPlayer();
-  });
-
-  trucoButtonP1.addEventListener("click", function () {
-    myView.displayCardsEvents(`P1 Canto Truco`, "_");
-    p1buttonsDisabler();
-    p2buttonsDisabler(true, true, false, true, false, false);
-    switchPlayer();
-    trucoCall = true;
-  });
-
-  trucoButtonP2.addEventListener("click", function () {
-    myView.displayCardsEvents(`P2 Canto Truco`, "_");
-    p1buttonsDisabler(true, true, false, true, false, false);
-    p2buttonsDisabler();
-    switchPlayer();
-    trucoCall = true;
-  });
-
-  reTrucoButtonP1.addEventListener("click", function () {
-    myView.displayCardsEvents(`P1 Canto Retruco`, "_");
-    p1buttonsDisabler();
-    p2buttonsDisabler(true, true, true, false, false, false);
-    switchPlayer();
-    reTrucoCall = true;
-  });
-
-  reTrucoButtonP2.addEventListener("click", function () {
-    myView.displayCardsEvents(`P2 Canto Retruco`, "_");
-    p1buttonsDisabler(true, true, true, false, false, false);
-    p2buttonsDisabler();
-    switchPlayer();
-    reTrucoCall = true;
-  });
-
-  valeCuatroButtonP1.addEventListener("click", function () {
-    myView.displayCardsEvents(`P1 Canto Vale Cuatro`, "_");
-    p1buttonsDisabler();
-    p2buttonsDisabler(true, true, true, true, false, false);
-    switchPlayer();
-    valeCuatroCall = true;
-  });
-
-  valeCuatroButtonP2.addEventListener("click", function () {
-    myView.displayCardsEvents(`P2 Canto Vale Cuatro`, "_");
-    p1buttonsDisabler();
-    p2buttonsDisabler(true, true, true, true, false, false);
-    switchPlayer();
-    valeCuatroCall = true;
-  });
-
-  acceptButtonP1.addEventListener("click", function () {
-    p1buttonsDisabler();
-
-    if (valeCuatroCall) {
-      console.log("vale aceptado");
-      p2buttonsDisabler(true, true, true, true, true, true);
-    }
-
-    if (reTrucoCall) {
-      p2buttonsDisabler(true, true, true, false, true, true);
-      console.log("retruco aceptado");
-    }
-
-    if (trucoCall) {
-      console.log("truco aceptado");
-      p2buttonsDisabler(true, true, false, true, true, true);
-    }
-
-    switchPlayer();
-
-    if (envidoEnvidoCall) {
-      acceptEnvido = true;
-      envidoEnvidoCall = true;
-      addEnvidoPoints();
-    } else if (envidoCall) {
-      acceptEnvido = true;
-      addEnvidoPoints();
-
-      switchPlayer();
-    }
-  });
-
-  acceptButtonP2.addEventListener("click", function () {
-    if (trucoCall || reTrucoCall || valeCuatroCall) {
-      switchPlayer();
-      console.log("truco aceptado");
-    }
-
-    if (envidoEnvidoCall) {
-      acceptEnvido = true;
-      envidoEnvidoCall = true;
-      addEnvidoPoints();
-    } else if (envidoCall) {
-      acceptEnvido = true;
-      addEnvidoPoints();
-
-      switchPlayer();
-    }
-    disableEnvidoButtons();
-  });
-
-  rejectButtonP1.addEventListener("click", function () {
-    if (envidoCall) p2points += 1;
-    if (envidoEnvidoCall) p2points += 1;
-    if (envidoCall) {
-      acceptEnvido = false;
-      envidoEnvidoCall = false;
-    } else if (envidoEnvidoCall) {
-      acceptEnvido = false;
-
-      switchPlayer();
-    }
-    disableEnvidoButtons();
-  });
-
-  rejectButtonP2.addEventListener("click", function () {
-    if (envidoCall) p1points += 1;
-    if (envidoEnvidoCall) p1points += 1;
-    if (envidoCall) {
-      acceptEnvido = false;
-      envidoEnvidoCall = false;
-    } else if (envidoEnvidoCall) {
-      switchPlayer();
-      acceptEnvido = false;
-    }
-    disableEnvidoButtons();
-  });
 
   // console.log(`current Player: ${currentPlayer}`);
   p1RoundChoice = 0;
