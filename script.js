@@ -74,6 +74,8 @@ let trucoCallFromP2 = false;
 let retrucoCallFromP1 = false;
 let retrucoCallFromP2 = false;
 let valeCuatroCall = false;
+let buttonaction = false;
+let buttonsPressCounter = 0;
 
 let p1 = 1;
 let p2 = 2;
@@ -284,6 +286,7 @@ const nextRound = function () {
   retrucoCallFromP1 = false;
   retrucoCallFromP2 = false;
   valeCuatroCall = false;
+  buttonaction = false;
 
   p1 = 1;
   p2 = 2;
@@ -344,45 +347,76 @@ const revealCards = function () {
 const switchPlayer = function () {
   currentPlayer = currentPlayer === 1 ? 2 : 1;
   if (currentPlayer === 1) {
+    p2buttonsDisabler();
+
+    if (buttonaction === false) {
+      console.log("this round wasnt about a button, it was about a card");
+
+      // P1 ValeCuatro
+
+      if (valeCuatroCall === false) {
+        console.log("Calls 1");
+        // P1 Vale Cuatro button available
+        p1buttonsDisabler(true, true, true, false, true, true);
+      } else if (valeCuatroCall === true) {
+        console.log("Calls 2");
+        // P2 Called Vale Cuatro, no more actions avaible
+        p1buttonsDisabler(true, true, true, true, true, true);
+      }
+
+      // P1 Retruco
+
+      if (retrucoCallFromP2 === false && retrucoCallFromP1 !== true) {
+        console.log("Calls 3");
+        // P1 Retruco button available
+        p1buttonsDisabler(true, true, false, true, true, true);
+      } else if (retrucoCallFromP2 === true) {
+        console.log("Calls 4");
+        // P2 Called Retruco, P1 can call Vale Cuatro
+        // P1 Vale 4 button available
+        p1buttonsDisabler(true, true, true, false, true, true);
+      }
+
+      // P1 Truco
+
+      if (trucoCallFromP2 === false && trucoCallFromP1 !== true) {
+        console.log("Calls 5");
+        // P1 Truco button avaible
+        p1buttonsDisabler(true, false, true, true, true, true);
+      }
+
+      console.log(trucoCallFromP2);
+      if (trucoCallFromP2 === true) {
+        console.log("Calls 6");
+        // P2 Called Truco, P1 can call Retruco
+        // P1 Retruco button avaible
+        p1buttonsDisabler(true, true, false, true, true, true);
+      }
+
+      // P1 Envido
+
+      if (envidoCall === false) {
+        console.log("Calls 7");
+        console.log("envidocall:", envidoCall);
+        // P1 Envido button avaible
+        p1buttonsDisabler(false, false, true, true, true, true);
+      } else if (envidoCall === true && envidoEnvidoCall === false) {
+        console.log("Calls 8");
+        // P2 Called Envido, EnvidoEnvido is avaible
+        p1buttonsDisabler(false, false, true, true, true, true);
+      }
+
+      p2buttonsDisabler();
+    }
+
     /* Aca tengo que hacer todos los swithcs y checks de calls, y en los botones, solo las calls, y llamar al switch, entonces en el switch se hacen los botones y no se solapa en 2 lugares diferentes */
 
-    /*
-    if (valeCuatroCall === false) {
-      p1buttonsDisabler(true, true, true, false, true, true);
-    }
-    if (retrucoCallFromP2 === false) {
-      p1buttonsDisabler(true, true, false, true, true, true);
-    }
-    if (trucoCallFromP2 === false) {
-      p1buttonsDisabler(true, false, true, true, true, true);
-      if (envidoCall === false) {
-        p1buttonsDisabler(false, false, true, true, true, true);
-      }
-    }
-    if (envidoCall === false && currentRound === 1) {
-      p1buttonsDisabler(false, false, true, true, true, true);
-      if (trucoCallFromP2 === false) {
-        p1buttonsDisabler(false, false, true, true, true, true);
-      }
-    }
-
-
-
-
-
-    if (envidoCall) {
-      p2buttonsDisabler(true, false, true, true, false, false);
-    }
-    if (envidoEnvidoCall) {
-      p2buttonsDisabler(false, false, true, true, false, false);
-    }
-    */
+    /*Los botones de envido y truco, tienen que deshabilitar las cartas del otro player, los botones de acepto tienen que rehabilitarlas, y rehabilitar los 2 lados, por que en elcaso de un envido envido, o truco retruco vale 4, tienen que rehabilitar los 2 lados*/
 
     // Round one, envido and truco switch
 
     // Round one, envido and truco switch
 
-    p2buttonsDisabler();
     //console.log("al principio del switch()");
     //console.log(currentPlayer);
     //console.log(`Current player ${currentPlayer}`);
@@ -431,6 +465,67 @@ const switchPlayer = function () {
     btnP2card3.disabled = btnP2card3.disabled === true ? true : false;
     //Asigna el current player // Corrected assignment
   } else {
+    p1buttonsDisabler();
+
+    if (buttonaction === false) {
+      console.log("this round wasnt about a button, it was about a card");
+
+      // P1 ValeCuatro
+
+      if (valeCuatroCall === false) {
+        console.log("Calls 1");
+        // P1 Vale Cuatro button available
+        p2buttonsDisabler(true, true, true, false, true, true);
+      } else if (valeCuatroCall === true) {
+        console.log("Calls 2");
+        // P2 Called Vale Cuatro, no more actions avaible
+        p2buttonsDisabler(true, true, true, true, true, true);
+      }
+
+      // P1 Retruco
+
+      if (retrucoCallFromP1 === false && retrucoCallFromP2 !== true) {
+        console.log("Calls 3");
+        // P1 Retruco button available
+        p2buttonsDisabler(true, true, false, true, true, true);
+      } else if (retrucoCallFromP1 === true) {
+        console.log("Calls 4");
+        // P2 Called Retruco, P1 can call Vale Cuatro
+        // P1 Vale 4 button available
+        p2buttonsDisabler(true, true, true, false, true, true);
+      }
+
+      // P1 Truco
+
+      if (trucoCallFromP1 === false && trucoCallFromP2 !== true) {
+        console.log("Calls 5");
+        // P1 Truco button avaible
+        p2buttonsDisabler(true, false, true, true, true, true);
+      }
+
+      console.log(trucoCallFromP1);
+      if (trucoCallFromP1 === true) {
+        console.log("Calls 6");
+        // P2 Called Truco, P1 can call Retruco
+        // P1 Retruco button avaible
+        p2buttonsDisabler(true, true, false, true, true, true);
+      }
+
+      // P1 Envido
+
+      if (envidoCall === false) {
+        console.log("Calls 7");
+        console.log("envidocall:", envidoCall);
+        // P1 Envido button avaible
+        p2buttonsDisabler(false, false, true, true, true, true);
+      } else if (envidoCall === true && envidoEnvidoCall === false) {
+        console.log("Calls 8");
+        // P2 Called Envido, EnvidoEnvido is avaible
+        p2buttonsDisabler(false, false, true, true, true, true);
+      }
+
+      p1buttonsDisabler();
+    }
     //console.log("al principio del switch()");
     //console.log(currentPlayer);
     //console.log(`Current player ${currentPlayer}`);
@@ -555,6 +650,15 @@ const addEnvidoPoints = function () {
   }
 };
 
+const buttonsSwitch = function () {
+  /** This function checks the amount of times a button was pressed,
+   * to check if it needs to switch player when accepted or rejected */
+  if (buttonsPressCounter % 2 !== 0) {
+    switchPlayer();
+    buttonsPressCounter = 0;
+  }
+};
+
 class playerCardsClass {
   _parentElement = document.querySelector(".playerCards");
 
@@ -584,6 +688,8 @@ class playerCardsClass {
         `${deck[cardChoice]["name"]}`
       );
 
+      buttonaction = false;
+
       switchPlayer();
 
       myView.displayCardsEvents(
@@ -601,137 +707,141 @@ playerCardsButtons.clickHandler();
 envidoButtonP1.addEventListener("click", function () {
   if (envidoCall) {
     myView.displayEnvidoTrucoEvents(`P1 Canto Envido Envido`);
-    p1buttonsDisabler();
     p2buttonsDisabler(true, false, true, true, false, false);
     envidoEnvidoCall = true;
+    buttonsPressCounter++;
   } else {
     myView.displayEnvidoTrucoEvents(`P1 Canto Envido`);
-    p1buttonsDisabler();
     p2buttonsDisabler(false, false, true, true, false, false);
     envidoCall = true;
+    buttonsPressCounter++;
   }
+  buttonaction = true;
   switchPlayer();
+  btnP2card1.disabled = true;
+  btnP2card2.disabled = true;
+  btnP2card3.disabled = true;
 });
 
 envidoButtonP2.addEventListener("click", function () {
   if (envidoCall) {
     myView.displayEnvidoTrucoEvents(`P2 Canto Envido Envido`);
     p1buttonsDisabler(true, false, true, true, false, false);
-    p2buttonsDisabler();
     envidoEnvidoCall = true;
+    buttonsPressCounter++;
   } else {
     myView.displayEnvidoTrucoEvents(`P2 Canto Envido`);
     p1buttonsDisabler(false, false, true, true, false, false);
-    p2buttonsDisabler();
     envidoCall = true;
+    buttonsPressCounter++;
   }
+  buttonaction = true;
   switchPlayer();
 });
 
 trucoButtonP1.addEventListener("click", function () {
   myView.displayEnvidoTrucoEvents(`P1 Canto Truco`);
-  p1buttonsDisabler();
   p2buttonsDisabler(true, true, false, true, false, false);
-  switchPlayer();
   trucoCallFromP1 = true;
+  buttonaction = true;
+  buttonsPressCounter++;
+  switchPlayer();
 });
 
 trucoButtonP2.addEventListener("click", function () {
   myView.displayEnvidoTrucoEvents(`P2 Canto Truco`);
   p1buttonsDisabler(true, true, false, true, false, false);
-  p2buttonsDisabler();
-  switchPlayer();
   trucoCallFromP2 = true;
+  buttonaction = true;
+  buttonsPressCounter++;
+  switchPlayer();
 });
 
 reTrucoButtonP1.addEventListener("click", function () {
   myView.displayEnvidoTrucoEvents(`P1 Canto Retruco`);
-  p1buttonsDisabler();
   p2buttonsDisabler(true, true, true, false, false, false);
-  switchPlayer();
   retrucoCallFromP1 = true;
+  buttonaction = true;
+  buttonsPressCounter++;
+  switchPlayer();
 });
 
 reTrucoButtonP2.addEventListener("click", function () {
   myView.displayEnvidoTrucoEvents(`P2 Canto Retruco`);
   p1buttonsDisabler(true, true, true, false, false, false);
-  p2buttonsDisabler();
-  switchPlayer();
   retrucoCallFromP2 = true;
+  buttonaction = true;
+  buttonsPressCounter++;
+  switchPlayer();
 });
 
 valeCuatroButtonP1.addEventListener("click", function () {
   myView.displayEnvidoTrucoEvents(`P1 Canto Vale Cuatro`);
-  p1buttonsDisabler(true, true, true, true, false, false);
-  p2buttonsDisabler();
-  switchPlayer();
+  p2buttonsDisabler(true, true, true, true, false, false);
   valeCuatroCall = true;
+  buttonaction = true;
+  buttonsPressCounter++;
+  switchPlayer();
 });
 
 valeCuatroButtonP2.addEventListener("click", function () {
   myView.displayEnvidoTrucoEvents(`P2 Canto Vale Cuatro`);
   p1buttonsDisabler(true, true, true, true, false, false);
-  p2buttonsDisabler();
-  switchPlayer();
   valeCuatroCall = true;
+  buttonaction = true;
+  buttonsPressCounter++;
+  switchPlayer();
 });
 
 acceptButtonP1.addEventListener("click", function () {
-  p1buttonsDisabler();
-
+  buttonaction = true;
   if (valeCuatroCall) {
-    myView.displayEnvidoTrucoEvents("P1 vale aceptado");
-    p2buttonsDisabler(true, true, true, true, true, true);
-    switchPlayer();
+    myView.displayEnvidoTrucoEvents("P1 Vale Cuatro Aceptado");
+    buttonsSwitch();
   } else if (retrucoCallFromP2) {
-    p2buttonsDisabler(true, true, true, false, true, true);
-    myView.displayEnvidoTrucoEvents("retruco aceptado");
-  } else if (trucoCallFromP1) {
-    myView.displayEnvidoTrucoEvents("truco aceptado");
-    p2buttonsDisabler(true, true, false, true, true, true);
-    switchPlayer();
+    myView.displayEnvidoTrucoEvents("P1 Retruco Aceptado");
+    buttonsSwitch();
+  } else if (trucoCallFromP2) {
+    myView.displayEnvidoTrucoEvents("P1 Truco Aceptado");
+    buttonsSwitch();
   }
 
   if (envidoEnvidoCall) {
-    //myView.displayEnvidoTrucoEvents("acepto envido envido");
+    myView.displayEnvidoTrucoEvents("P1 Envido Envido Aceptado");
     acceptEnvido = true;
     addEnvidoPoints();
+    buttonsSwitch();
   } else if (envidoCall) {
-    //myView.displayEnvidoTrucoEvents("acepto envido");
+    myView.displayEnvidoTrucoEvents("P1 Envido Aceptado");
     acceptEnvido = true;
     addEnvidoPoints();
-    switchPlayer();
+    buttonsSwitch();
   }
 });
 
 acceptButtonP2.addEventListener("click", function () {
-  p1buttonsDisabler();
-
+  buttonaction = true;
   if (valeCuatroCall) {
-    myView.displayEnvidoTrucoEvents("vale aceptado");
-    p2buttonsDisabler(true, true, true, true, true, true);
-    switchPlayer();
+    myView.displayEnvidoTrucoEvents("P2 Vale Cuatro Aceptado");
+    buttonsSwitch();
   } else if (retrucoCallFromP1) {
-    p2buttonsDisabler(true, true, true, false, true, true);
-    myView.displayEnvidoTrucoEvents("retruco aceptado");
+    myView.displayEnvidoTrucoEvents("P2 Retruco Aceptado");
+    buttonsSwitch();
   } else if (trucoCallFromP1) {
-    myView.displayEnvidoTrucoEvents("truco aceptado");
-    p2buttonsDisabler(true, true, false, true, true, true);
-    switchPlayer();
+    myView.displayEnvidoTrucoEvents("P2 Truco Aceptado");
+    buttonsSwitch();
   }
 
   if (envidoEnvidoCall) {
-    myView.displayEnvidoTrucoEvents("acepto envido envidooooOoooo");
+    myView.displayEnvidoTrucoEvents("P2 Envido Envido Aceptado");
     acceptEnvido = true;
     addEnvidoPoints();
+    buttonsSwitch();
   } else if (envidoCall) {
-    myView.displayEnvidoTrucoEvents("acepto envidoooorrr");
-    console.log("acepto envidoooooorrr");
+    myView.displayEnvidoTrucoEvents("P2 Envido Aceptado");
     acceptEnvido = true;
     addEnvidoPoints();
-    switchPlayer();
-    myView.displayEnvidoTrucoEvents("despues del switch");
-    console.log("acepto envidoooooo despues del swithchh");
+    buttonsSwitch();
   }
 });
 
@@ -759,11 +869,13 @@ rejectButtonP1.addEventListener("click", function () {
     myView.displayEnvidoTrucoEvents(`P1 rechazo el Envido Envido`);
     acceptEnvido = false;
     p2points += 2;
+    buttonaction = true;
     p2buttonsDisabler(true, false, true, true, true, true);
   } else if (envidoCall) {
     myView.displayEnvidoTrucoEvents(`P1 rechazo el Envido`);
     acceptEnvido = false;
     p2points += 1;
+    buttonaction = true;
     p2buttonsDisabler(true, false, true, true, true, true);
     switchPlayer();
   }
@@ -793,11 +905,13 @@ rejectButtonP2.addEventListener("click", function () {
     myView.displayCardsEvents(`P2 rechazo el Envido Envido`, "_");
     acceptEnvido = false;
     p1points += 2;
+    buttonaction = true;
     p1buttonsDisabler(true, false, true, true, true, true);
   } else if (envidoCall) {
     myView.displayCardsEvents(`P2 rechazo el Envido`, "_");
     acceptEnvido = false;
     p1points += 1;
+    buttonaction = true;
     p2buttonsDisabler(true, false, true, true, true, true);
     switchPlayer();
   }

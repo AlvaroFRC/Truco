@@ -130,6 +130,7 @@
   border-color: rgb(255, 187, 0);
   border-width: 0.2cm;
   padding: 1cap;
+  margin: 1cap;
   background-color: rgb(255, 255, 255);
 }
 
@@ -138,5 +139,6 @@
   border-color: rgb(0, 140, 255);
   border-width: 0.2cm;
   padding: 1cap;
+  margin: 1cap;
   background-color: rgb(255, 255, 255);
 }
