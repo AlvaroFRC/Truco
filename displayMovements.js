@@ -95,7 +95,7 @@ export default class View {
     const event = { info, playerNumber };
     // Push the object to the gameEvents array
     games.push(event);
-    console.log(games);
+    //console.log(games);
     this.generateGamesMarkup(games, playerNumber);
   };
 }
