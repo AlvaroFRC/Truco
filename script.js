@@ -634,6 +634,31 @@ const buttonsSwitch = function () {
   }
 };
 
+const roundpoints = function () {
+  totalPoints = 0;
+  if (trucoCallFromP1 === false && trucoCallFromP2 === false) {
+    console.log("no se canto truco, puntos +1 | first exit");
+    totalPoints += 1;
+  } else {
+    console.log("si se canto truco, puntos +2 | second exit");
+    totalPoints += 2;
+    if (retrucoCallFromP1 === false && retrucoCallFromP2 === false) {
+      console.log("no se canto retruco, puntos +0 | third exit");
+    } else {
+      console.log("si se canto retruco, puntos + 1 | fourth exit");
+      totalPoints += 1;
+      if (valeCuatroCall === false) {
+        console.log("no se canto retruco, puntos +0 | fifth exit");
+      } else {
+        console.log("si se canto retruco, puntos + 1 | sixth exit");
+        totalPoints += 1;
+      }
+    }
+  }
+  console.log("totalpoints:", totalPoints);
+  return totalPoints;
+};
+
 class playerCardsClass {
   _parentElement = document.querySelector(".gameSpace");
 
@@ -888,17 +913,17 @@ rejectButtonP1.addEventListener("click", function () {
   if (valeCuatroCall) {
     myView.displayEnvidoTrucoEvents(`P1 rechazo el Vale 4`);
     myView.displayGamesEvents(`** El Player 2 gano por rechazo **`, 2);
-    p2points += 3;
+    p2points += roundpoints();
     nextRound();
   } else if (retrucoCallFromP2) {
     myView.displayEnvidoTrucoEvents(`P1 rechazo el Retruco`);
     myView.displayGamesEvents(`** El Player 2 gano por rechazo **`, 2);
-    p2points += 2;
+    p2points += roundpoints();
     nextRound();
   } else if (trucoCallFromP2) {
     myView.displayEnvidoTrucoEvents(`P1 rechazo el Truco`);
     myView.displayGamesEvents(`** El Player 2 gano por rechazo **`, 2);
-    p2points += 1;
+    p2points += roundpoints();
     nextRound();
   }
 
@@ -924,17 +949,17 @@ rejectButtonP2.addEventListener("click", function () {
   if (valeCuatroCall) {
     myView.displayCardsEvents(`P2 rechazo el Vale 4`, "_");
     myView.displayGamesEvents(`** El Player 1 gano por rechazo **`, 1);
-    p1points += 3;
+    p1points += roundpoints();
     nextRound();
   } else if (retrucoCallFromP1) {
     myView.displayCardsEvents(`P2 rechazo el Retruco`, "_");
     myView.displayGamesEvents(`** El Player 1 gano por rechazo **`, 1);
-    p1points += 2;
+    p1points += roundpoints();
     nextRound();
   } else if (trucoCallFromP1) {
     myView.displayCardsEvents(`P2 rechazo el Truco`, "_");
     myView.displayGamesEvents(`** El Player 1 gano por rechazo **`, 1);
-    p1points += 1;
+    p1points += roundpoints();
     nextRound();
   }
 
@@ -1073,6 +1098,13 @@ const roundThree = function () {
           `*** El Player${currentPlayer} gano tercera`,
           currentPlayer
         );
+
+        if (currentPlayer === 1) {
+          p1points += roundpoints();
+        } else {
+          p2points += roundpoints();
+        }
+
         nextRound();
       }
       if (winner === p1) {
@@ -1080,6 +1112,7 @@ const roundThree = function () {
         console.log("Round Three ends");
         myView.displayRoundEvents(`*** El Player 1 gano tercera ***`);
         myView.displayGamesEvents("*** El Player 1 gano en tercera ***", 1);
+        p1points += roundpoints();
         nextRound();
       }
       if (winner === p2) {
@@ -1087,6 +1120,7 @@ const roundThree = function () {
         console.log("Round Three ends");
         myView.displayRoundEvents(`*** El Player 2 gano tercera ***`);
         myView.displayGamesEvents("*** El Player 2 gano en tercera ***", 2);
+        p2points += roundpoints();
         nextRound();
       }
     }
@@ -1111,7 +1145,12 @@ const roundThree = function () {
       ? myView.displayGamesEvents(`** El Player 1 gano en segunda **`, 1)
       : myView.displayGamesEvents(`** El Player 2 gano en segunda **`, 2);
 
+    p1roundsWon > p2roundsWon
+      ? (p1points += roundpoints())
+      : (p2points += roundpoints());
+
     clearInterval(roundThreeTimer);
+
     nextRound();
   }
 
@@ -1132,7 +1171,12 @@ const roundThree = function () {
       ? myView.displayGamesEvents(`** El Player 1 gano en segunda **`, 1)
       : myView.displayGamesEvents(`** El Player 2 gano en segunda **`, 2);
 
+    p1roundsWon > p2roundsWon
+      ? (p1points += roundpoints())
+      : (p2points += roundpoints());
+
     clearInterval(roundThreeTimer);
+
     nextRound();
   }
 
@@ -1153,7 +1197,12 @@ const roundThree = function () {
       ? myView.displayGamesEvents(`** El Player 1 gano en segunda **`, 1)
       : myView.displayGamesEvents(`** El Player 2 gano en segunda **`, 2);
 
+    p1roundsWon > p2roundsWon
+      ? (p1points += roundpoints())
+      : (p2points += roundpoints());
+
     clearInterval(roundThreeTimer);
+
     nextRound();
   }
 
