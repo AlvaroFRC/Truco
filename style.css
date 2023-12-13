@@ -105,7 +105,7 @@
   justify-content: center;
   align-items: center;
   text-align: center;
-  scale: 0.75;
+  scale: 0.7;
 }
 
 /* Center Table */
@@ -151,7 +151,7 @@
 
 .p1back,
 .p2back {
-  height: 15vh;
+  height: 14%;
   justify-content: center;
   align-items: center;
   text-align: center;
@@ -191,10 +191,10 @@
 
 .infoSlotP1,
 .infoSlotP2 {
-  height: 100vh;
+  height: 54%;
   display: grid;
   grid-template-rows: repeat(9, 1fr); /* Adjust the number of rows as needed */
-  grid-gap: 10px; /* Adjust the gap between buttons */
+  grid-gap: 7px; /* Adjust the gap between buttons */
   justify-content: center;
   align-items: center;
   text-align: center;
@@ -205,11 +205,11 @@
 .pointsP2,
 .scoreEnvido1,
 .scoreEnvido2 {
-  height: 20vh;
+  height: 14%;
   justify-content: center;
   align-items: center;
   text-align: center;
-  font-size: 1.1cm;
+  font-size: 0.9cm;
 }
 
 .btn {
@@ -250,7 +250,7 @@
 
 .matchActions,
 .roundActions {
-  height: 4.5vh;
+  height: 10%;
   justify-content: center;
   align-items: center;
   text-align: center;
@@ -258,7 +258,7 @@
 }
 .games,
 .movements {
-  height: 34vh;
+  height: 39%;
   border: 1px solid #ccc;
   overflow-y: auto; /* Enable vertical scrollbar when needed */
   /**/

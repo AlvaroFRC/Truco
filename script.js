@@ -236,15 +236,15 @@ const checkRightPlayer = function (current, player) {
     switchPlayer();
   }
 };
-
+// Tengo que reactivar lo de desactive en el timerrrrrr aca abajo
 const startPlayTimer = function () {
   const tick = function () {
     const min = String(Math.trunc(time / 60)).padStart(2, 0);
     const sec = String(time % 60).padStart(2, 0);
     time++;
 
-    // Change label
-    timerLabel.textContent = `Tiempo jugando: ${min}:${sec}`;
+    // Change label // Reactuvar estO:
+    //timerLabel.textContent = `Tiempo jugando: ${min}:${sec}`;
   };
   let time = 0;
   tick();
