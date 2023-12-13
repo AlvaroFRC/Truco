@@ -99,19 +99,3 @@ export default class View {
     this.generateGamesMarkup(games, playerNumber);
   };
 }
-
-/*
-.p1back {
-  background-color: rgb(255, 187, 0);
-}
-
-.p2back {
-  background-color: rgb(0, 140, 255);
-}*/
-/*
-funciona para poner la carta en el display, pero la borra despues de cada movimiento, por que borra todo y no registra
-
-podria cambiar gameEvents, de list a un dict, con keys de las cartas, y hacer que guarde el card, igual que guarda las cosas, y que con eso este..
-
-y despues haga un tal, uso esto, y que con el index numer -1 y -2, haga el desplay de card1 vs card2
-*/

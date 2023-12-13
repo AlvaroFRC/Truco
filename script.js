@@ -244,7 +244,7 @@ const startPlayTimer = function () {
     time++;
 
     // Change label // Reactuvar estO:
-    //timerLabel.textContent = `Tiempo jugando: ${min}:${sec}`;
+    timerLabel.textContent = `Playing time: ${min}:${sec}`;
   };
   let time = 0;
   tick();
@@ -1174,9 +1174,20 @@ const roundThree = function () {
 // Buttons Listeners
 
 newGame();
+btnNewGame.addEventListener("click", function () {
+  window.location.reload();
+});
 
 // TODO Aceptar truco en 1ra, tmb hace que se acepte envido de nuevo, si fue cantado antes
 
 // TODO Implementar el contador de puntos
+// por envido
+// por truco/retruco/vale4, por rounds
+// con algun function check points (if trucop1 === true or truco p2=== true) +2 puntos, if retruco true 3, if vale 4 true= 4, esle 1 point.. y me de un return de points en un valor.. despues cuando voyu a hacer el next round, dependiedno de que player fue el que gano y el que hace el next round, que sume ese valor al p1points o p2points correspondiedntemente
+
+// Un contador.. puede ser con un timer 1ves por segundo para que no haga falta spam, que revise si el score de p1 o p2 es === 15, si en lagun momento es igual a 15, ese player gano.. puedo hacer aparecer algun modal window, y que te haga empezar un round nuevo
 
 // TODO Mejorar la UI
+// Seleccionar Font, ajustar tamaños, colores
+// Acomodar margins // paddins
+// Cambiar diseño de botones cuando estan disabled
