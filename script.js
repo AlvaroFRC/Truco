@@ -41,12 +41,15 @@ const envidoScore1 = document.querySelector(".scoreEnvido1");
 const envidoScore2 = document.querySelector(".scoreEnvido2");
 //envido labels
 const pointsLableP1 = document.querySelector(".pointsP1");
-const pointsLableP2 = document.querySelector(".PointsP2");
+const pointsLableP2 = document.querySelector(".pointsP2");
 //Backgrounds
 const p1Backgound = document.querySelector(".playerOneTable");
 const p2Backgound = document.querySelector(".playerTwoTable");
 //timer label
 const timerLabel = document.querySelector(".timerLabel");
+
+const infoSlotP1 = document.querySelector(".infoSlotP1");
+const infoSlotP2 = document.querySelector(".infoSlotP2");
 
 // code logic
 
@@ -305,16 +308,19 @@ const nextRound = function () {
   btnP2card2.disabled = false;
   btnP2card3.disabled = false;
 
-  slotR1P1.querySelector("img").src = cards.zbackside;
-  slotR1P2.querySelector("img").src = cards.zbackside;
-  slotR2P1.querySelector("img").src = cards.zbackside;
-  slotR2P2.querySelector("img").src = cards.zbackside;
-  slotR3P1.querySelector("img").src = cards.zbackside;
-  slotR3P2.querySelector("img").src = cards.zbackside;
+  slotR1P1.querySelector("img").src = cards.emptycard;
+  slotR1P2.querySelector("img").src = cards.emptycard;
+  slotR2P1.querySelector("img").src = cards.emptycard;
+  slotR2P2.querySelector("img").src = cards.emptycard;
+  slotR3P1.querySelector("img").src = cards.emptycard;
+  slotR3P2.querySelector("img").src = cards.emptycard;
 
   //Envido
-  envidoScore1.textContent = `Envido : ${calcEnvido(player1Cards)}`;
-  envidoScore2.textContent = `Envido : ${calcEnvido(player2Cards)}`;
+  envidoScore1.textContent = `Envido \n ${calcEnvido(player1Cards)}`;
+  envidoScore2.textContent = `Envido \n ${calcEnvido(player2Cards)}`;
+
+  pointsLableP1.textContent = `Puntos ${p1points}/15`;
+  pointsLableP2.textContent = `Puntos ${p2points}/15`;
 
   roundOne();
 };
@@ -376,6 +382,7 @@ const switchPlayer = function () {
 
       if (
         envidoCall === false &&
+        acceptEnvido !== true &&
         trucoCallFromP2 === false &&
         currentRound === 1
       ) {
@@ -459,6 +466,7 @@ const switchPlayer = function () {
 
       if (
         envidoCall === false &&
+        acceptEnvido !== true &&
         trucoCallFromP1 === false &&
         currentRound === 1
       ) {
@@ -627,11 +635,11 @@ const buttonsSwitch = function () {
 };
 
 class playerCardsClass {
-  _parentElement = document.querySelector(".playerCards");
+  _parentElement = document.querySelector(".gameSpace");
 
   clickHandler() {
     this._parentElement.addEventListener("click", function (e) {
-      const btn = e.target.closest(".btn");
+      const btn = e.target.closest(".cardBtn");
       if (!btn) return;
 
       const player = btn.dataset.player;
@@ -672,6 +680,7 @@ const playerCardsButtons = new playerCardsClass();
 playerCardsButtons.clickHandler();
 
 envidoButtonP1.addEventListener("click", function () {
+  infoSlotP2.style.borderColor = "green";
   // buttonaction means the click was in a button and not in a card
   // buttonPresCounter is to check chain of buttons for the playwer switch
   if (envidoCall) {
@@ -846,6 +855,7 @@ acceptButtonP1.addEventListener("click", function () {
 acceptButtonP2.addEventListener("click", function () {
   buttonaction = true;
   p2buttonColor();
+  infoSlotP2.style.borderColor = "black";
   p2buttonsDisabler();
 
   if (valeCuatroCall) {
@@ -1162,18 +1172,11 @@ const roundThree = function () {
 };
 
 // Buttons Listeners
-btnDeal.addEventListener("click", {});
-btnReset.addEventListener("click", roundOne);
-btnNewGame.addEventListener("click", newGame);
+
 newGame();
+
+// TODO Aceptar truco en 1ra, tmb hace que se acepte envido de nuevo, si fue cantado antes
 
 // TODO Implementar el contador de puntos
 
-/*Estoy ya esta implementado y funciona con el envido, lo unico que necesiot tener en ucenta es que newGame no me lo sobreescriba, y que next round siga sumando al contador de puntos
-
-// TODO Implementar el nextRound que mantenga los puntos y contador y reinicie todos los parametros, como newGame, pero sin reiniciar los puntos
-
 // TODO Mejorar la UI
-// TODO Label que muestre lo que esta pasando en cada accion*/
-
-//////Hasta aca hago rollback

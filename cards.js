@@ -42,6 +42,8 @@ import goldseven from "url:./assets/cards/goldseven.png";
 import goldjack from "url:./assets/cards/goldjack.png";
 import goldknight from "url:./assets/cards/goldknight.png";
 import goldking from "url:./assets/cards/goldking.png";
+import greencloth from "url:./assets/cards/green.jpg";
+import emptycard from "url:./assets/cards/empty.png";
 
 export {
   zbackside,
@@ -85,6 +87,8 @@ export {
   goldjack,
   goldknight,
   goldking,
+  greencloth,
+  emptycard,
 };
 
 /* original json

@@ -11,7 +11,7 @@ export default class View {
     movs.forEach((mov, i, arr) => {
       let round = "";
 
-      console.log("arr", arr);
+      //console.log("arr", arr);
 
       if (mov["round"] === true && mov["card2"] !== undefined) {
         round = `<img src="${mov["card1"]}" alt="round card" class="smallImage">  VS  <img src="${mov["card2"]}" alt="round card" class="smallImage">`;
@@ -78,10 +78,10 @@ export default class View {
     const movs = movements;
 
     movs.forEach((mov, i, arr) => {
-      console.log("mov", mov);
-      console.log("arr", arr);
+      //console.log("mov", mov);
+      //console.log("arr", arr);
       const html = `
-          <div class="games__row p${mov["playerNumber"]}back">
+          <div class="games__row p${mov["playerNumber"]}win">
           <div class="games__value">Partido N° ${i + 1}: ${mov["info"]}</div>
 
           </div>
