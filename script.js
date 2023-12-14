@@ -83,6 +83,11 @@ let buttonsPressCounter = 0;
 let p1 = 1;
 let p2 = 2;
 
+//colors
+
+let activePlayerColor = "springgreen";
+let inactivePlayerColor = "firebrick";
+
 // funciones
 
 // Create an instance of the View class
@@ -400,8 +405,8 @@ const switchPlayer = function () {
     /*Los botones de envido y truco, tienen que deshabilitar las cartas del otro player, los botones de acepto tienen que rehabilitarlas, y rehabilitar los 2 lados, por que en elcaso de un envido envido, o truco retruco vale 4, tienen que rehabilitar los 2 lados*/
 
     //Cambia el background
-    p1Backgound.style.backgroundColor = "green";
-    p2Backgound.style.backgroundColor = "red";
+    p1Backgound.style.backgroundColor = activePlayerColor;
+    p2Backgound.style.backgroundColor = inactivePlayerColor;
     //Deshabilita los botones del rival
     btnP1card1.disabled = false;
     btnP1card2.disabled = false;
@@ -479,8 +484,8 @@ const switchPlayer = function () {
       p1buttonColor();
     }
     //Cambia el background
-    p1Backgound.style.backgroundColor = "red";
-    p2Backgound.style.backgroundColor = "green";
+    p1Backgound.style.backgroundColor = inactivePlayerColor;
+    p2Backgound.style.backgroundColor = activePlayerColor;
     // Deshabilita los botones del rival
     btnP1card1.disabled = true;
     btnP1card2.disabled = true;
@@ -705,7 +710,7 @@ const playerCardsButtons = new playerCardsClass();
 playerCardsButtons.clickHandler();
 
 envidoButtonP1.addEventListener("click", function () {
-  infoSlotP2.style.borderColor = "green";
+  infoSlotP2.style.backgroundColor = "springgreen";
   // buttonaction means the click was in a button and not in a card
   // buttonPresCounter is to check chain of buttons for the playwer switch
   if (envidoCall) {
@@ -1228,11 +1233,6 @@ btnNewGame.addEventListener("click", function () {
 });
 
 // TODO Aceptar truco en 1ra, tmb hace que se acepte envido de nuevo, si fue cantado antes
-
-// TODO Implementar el contador de puntos
-// por envido
-// por truco/retruco/vale4, por rounds
-// con algun function check points (if trucop1 === true or truco p2=== true) +2 puntos, if retruco true 3, if vale 4 true= 4, esle 1 point.. y me de un return de points en un valor.. despues cuando voyu a hacer el next round, dependiedno de que player fue el que gano y el que hace el next round, que sume ese valor al p1points o p2points correspondiedntemente
 
 // Un contador.. puede ser con un timer 1ves por segundo para que no haga falta spam, que revise si el score de p1 o p2 es === 15, si en lagun momento es igual a 15, ese player gano.. puedo hacer aparecer algun modal window, y que te haga empezar un round nuevo
 
