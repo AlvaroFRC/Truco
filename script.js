@@ -85,7 +85,7 @@ let p2 = 2;
 
 //colors
 
-let activePlayerColor = "springgreen";
+let activePlayerColor = "seagreen";
 let inactivePlayerColor = "firebrick";
 
 // funciones
@@ -407,6 +407,14 @@ const switchPlayer = function () {
     //Cambia el background
     p1Backgound.style.backgroundColor = activePlayerColor;
     p2Backgound.style.backgroundColor = inactivePlayerColor;
+    p1Backgound.style.borderColor = "green";
+    p2Backgound.style.borderColor = "red";
+
+    //temporal, despues borrar o refactor
+    infoSlotP2.style.backgroundColor = "";
+    infoSlotP2.style.borderColor = "";
+    //termina temporal
+
     //Deshabilita los botones del rival
     btnP1card1.disabled = false;
     btnP1card2.disabled = false;
@@ -486,6 +494,14 @@ const switchPlayer = function () {
     //Cambia el background
     p1Backgound.style.backgroundColor = inactivePlayerColor;
     p2Backgound.style.backgroundColor = activePlayerColor;
+    p2Backgound.style.borderColor = "green";
+    p1Backgound.style.borderColor = "red";
+
+    //temporal, despues borrar o refactor
+    infoSlotP1.style.backgroundColor = "";
+    infoSlotP1.style.borderColor = "";
+    //termina temporal
+
     // Deshabilita los botones del rival
     btnP1card1.disabled = true;
     btnP1card2.disabled = true;
@@ -710,7 +726,10 @@ const playerCardsButtons = new playerCardsClass();
 playerCardsButtons.clickHandler();
 
 envidoButtonP1.addEventListener("click", function () {
+  //temporal, despues borrar o refactor
   infoSlotP2.style.backgroundColor = "springgreen";
+  infoSlotP2.style.borderColor = "green";
+  //termina temporal
   // buttonaction means the click was in a button and not in a card
   // buttonPresCounter is to check chain of buttons for the playwer switch
   if (envidoCall) {
@@ -748,6 +767,10 @@ envidoButtonP1.addEventListener("click", function () {
 });
 
 envidoButtonP2.addEventListener("click", function () {
+  //temporal, despues borrar o refactor
+  infoSlotP1.style.backgroundColor = "springgreen";
+  infoSlotP1.style.borderColor = "green";
+  //termina temporal
   if (envidoCall) {
     myView.displayEnvidoTrucoEvents(`P2 Canto Envido Envido`);
     p1buttonsDisabler(true, true, true, true, false, false);
@@ -780,6 +803,10 @@ envidoButtonP2.addEventListener("click", function () {
 });
 
 trucoButtonP1.addEventListener("click", function () {
+  //temporal, despues borrar o refactor
+  infoSlotP2.style.backgroundColor = "springgreen";
+  infoSlotP2.style.borderColor = "green";
+  //termina temporal
   myView.displayEnvidoTrucoEvents(`P1 Canto Truco`);
   p2buttonsDisabler(true, true, false, true, false, false);
   p2buttonColor("lightgray", "lightgray", "green", "lightgray", "green", "red");
@@ -790,6 +817,10 @@ trucoButtonP1.addEventListener("click", function () {
 });
 
 trucoButtonP2.addEventListener("click", function () {
+  //temporal, despues borrar o refactor
+  infoSlotP1.style.backgroundColor = "springgreen";
+  infoSlotP1.style.borderColor = "green";
+  //termina temporal
   myView.displayEnvidoTrucoEvents(`P2 Canto Truco`);
   p1buttonsDisabler(true, true, false, true, false, false);
   p1buttonColor("lightgray", "lightgray", "green", "lightgray", "green", "red");
@@ -800,6 +831,10 @@ trucoButtonP2.addEventListener("click", function () {
 });
 
 reTrucoButtonP1.addEventListener("click", function () {
+  //temporal, despues borrar o refactor
+  infoSlotP2.style.backgroundColor = "springgreen";
+  infoSlotP2.style.borderColor = "green";
+  //termina temporal
   myView.displayEnvidoTrucoEvents(`P1 Canto Retruco`);
   p2buttonsDisabler(true, true, true, false, false, false);
   p2buttonColor("lightgray", "lightgray", "lightgray", "green", "green", "red");
@@ -810,6 +845,10 @@ reTrucoButtonP1.addEventListener("click", function () {
 });
 
 reTrucoButtonP2.addEventListener("click", function () {
+  //temporal, despues borrar o refactor
+  infoSlotP1.style.backgroundColor = "springgreen";
+  infoSlotP1.style.borderColor = "green";
+  //termina temporal
   myView.displayEnvidoTrucoEvents(`P2 Canto Retruco`);
   p1buttonsDisabler(true, true, true, false, false, false);
   p1buttonColor("lightgray", "lightgray", "lightgray", "green", "green", "red");
@@ -820,6 +859,10 @@ reTrucoButtonP2.addEventListener("click", function () {
 });
 
 valeCuatroButtonP1.addEventListener("click", function () {
+  //temporal, despues borrar o refactor
+  infoSlotP2.style.backgroundColor = "springgreen";
+  infoSlotP2.style.borderColor = "green";
+  //termina temporal
   myView.displayEnvidoTrucoEvents(`P1 Canto Vale Cuatro`);
   p2buttonsDisabler(true, true, true, true, false, false);
   p2buttonColor(
@@ -837,6 +880,10 @@ valeCuatroButtonP1.addEventListener("click", function () {
 });
 
 valeCuatroButtonP2.addEventListener("click", function () {
+  //temporal, despues borrar o refactor
+  infoSlotP1.style.backgroundColor = "springgreen";
+  infoSlotP1.style.borderColor = "green";
+  //termina temporal
   myView.displayEnvidoTrucoEvents(`P2 Canto Vale Cuatro`);
   p1buttonsDisabler(true, true, true, true, false, false);
   p1buttonColor(
