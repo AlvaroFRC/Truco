@@ -8,6 +8,13 @@
   border-color: rgb(0, 0, 0);
   border-radius: 0.5cm;
   border-width: 5px;
+
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 32px;
+  letter-spacing: -1.2px;
+  word-spacing: 2px;
+
+  font-variant: small-caps;
 }
 
 /* Game space contains the 5 columns of cards, buttons, and table*/
@@ -133,8 +140,13 @@
 /* For */
 .rectangle {
   background-color: rgb(241, 241, 241); /* Adjust the color of the rectangles */
-  padding: 10px;
-  margin: 0.1cm;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-bottom: 10px;
+
+  margin-bottom: 0.4cm;
+  margin-right: 0.4cm;
+  margin-left: 0.4cm;
 
   border-style: outset;
   border-color: rgb(0, 0, 0);
@@ -144,9 +156,11 @@
 
 .p1InfoBox {
   background-color: rgb(184, 184, 184);
+  padding-top: 0.4cm;
 }
 .p2InfoBox {
   background-color: rgb(184, 184, 184);
+  padding-top: 0.4cm;
 }
 
 .p1back,
@@ -167,34 +181,12 @@
   border-color: rgb(0, 80, 146);
 }
 
-.p1win,
-.p2win {
-  height: auto;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  font-size: 0.37cm;
-  border-style: solid;
-
-  border-radius: 0.2cm;
-  border-width: 5px;
-}
-
-.p1win {
-  background-color: rgb(255, 174, 0);
-  border-color: rgb(204, 139, 0);
-}
-.p2win {
-  background-color: rgb(0, 106, 192);
-  border-color: rgb(0, 80, 146);
-}
-
 .infoSlotP1,
 .infoSlotP2 {
   height: 54%;
   display: grid;
   grid-template-rows: repeat(9, 1fr); /* Adjust the number of rows as needed */
-  grid-gap: 7px; /* Adjust the gap between buttons */
+  grid-gap: 2px; /* Adjust the gap between buttons */
   justify-content: center;
   align-items: center;
   text-align: center;
@@ -210,6 +202,8 @@
   align-items: center;
   text-align: center;
   font-size: 0.9cm;
+  display: grid;
+  grid-template-rows: repeat(2, 1fr); /* Adjust the number of rows as needed */
 }
 
 .btn {
@@ -241,6 +235,7 @@
   box-sizing: border-box;
   height: 100%;
   background-color: rgb(255, 246, 206);
+  padding-top: 0.4cm;
   flex: 1; /* Takes up 20% of the available space */
   border-style: outset;
   border-color: rgb(0, 0, 0);
@@ -255,11 +250,13 @@
   align-items: center;
   text-align: center;
   font-size: 0.8cm;
+  font-variant: small-caps;
 }
 .games,
 .movements {
-  height: 39%;
+  height: 36.5%;
   border: 1px solid #ccc;
+  padding-top: 10px;
   overflow-y: auto; /* Enable vertical scrollbar when needed */
   /**/
   border-style: outset;
@@ -271,6 +268,8 @@
 .movements__row {
   padding: 10px;
   border-bottom: 3px solid #ddd;
+  font-size: 0.4cm;
+  font-variant: normal;
 }
 
 .smallImage {
@@ -279,6 +278,33 @@
 }
 
 .games__row {
-  padding: 10px;
+  padding: 7px;
   margin-bottom: 0.1cm;
+}
+
+.p1win,
+.p2win {
+  height: auto;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+
+  border-style: solid;
+  padding: 0.01cm;
+  padding-left: 0.1cm;
+  padding-right: 0.1cm;
+  border-radius: 0.2cm;
+  border-width: 5px;
+
+  font-size: 0.4cm;
+  font-variant: normal;
+}
+
+.p1win {
+  background-color: rgb(255, 174, 0);
+  border-color: rgb(204, 139, 0);
+}
+.p2win {
+  background-color: rgb(0, 106, 192);
+  border-color: rgb(0, 80, 146);
 }
