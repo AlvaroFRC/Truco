@@ -368,20 +368,28 @@ const switchPlayer = function () {
     if (buttonaction === false) {
       console.log("this round wasnt about a button, it was about a card");
 
-      // P1 ValeCuatro
-      if (valeCuatroCall === false && retrucoCallFromP1 !== true) {
-        console.log("1 P1 Vale Cuatro button available");
-        p1buttonsDisabler(true, true, true, false, true, true);
+      // P1 Truco
+      if (trucoCallFromP2 === false && trucoCallFromP1 === false) {
+        console.log("1 P1 Truco button avaible");
+        p1buttonsDisabler(true, false, true, true, true, true);
       }
       // P1 Retruco
-      if (trucoCallFromP2 === true && valeCuatroCall === false) {
+
+      if (
+        trucoCallFromP2 === true &&
+        valeCuatroCall === false &&
+        retrucoCallFromP1 === false
+      ) {
         console.log("2 P1 Retruco button available");
         p1buttonsDisabler(true, true, false, true, true, true);
       }
-      // P1 Truco
-      if (trucoCallFromP2 === false && trucoCallFromP1 !== true) {
-        console.log("3 P1 Truco button avaible");
-        p1buttonsDisabler(true, false, true, true, true, true);
+
+      // P1 ValeCuatro
+      // p2 retrucocall === true | valecuatrocall === false
+
+      if (retrucoCallFromP2 === true && valeCuatroCall === false) {
+        console.log("3 P1 Vale Cuatro button available");
+        p1buttonsDisabler(true, true, true, false, true, true);
       }
 
       // P1 Envido
@@ -461,20 +469,28 @@ const switchPlayer = function () {
     if (buttonaction === false) {
       console.log("this round wasnt about a button, it was about a card");
 
-      // P2 ValeCuatro
-      if (valeCuatroCall === false && retrucoCallFromP2 === true) {
-        console.log("5 P2 Vale Cuatro button available");
-        p2buttonsDisabler(true, true, true, false, true, true);
+      // P2 Truco
+      if (trucoCallFromP1 === false && trucoCallFromP2 === false) {
+        console.log("5 P2 Truco button avaible");
+        p2buttonsDisabler(true, false, true, true, true, true);
       }
-      // P2 Retruco
-      if (trucoCallFromP1 === true && valeCuatroCall === false) {
+      // P1 Retruco
+
+      if (
+        trucoCallFromP1 === true &&
+        valeCuatroCall === false &&
+        retrucoCallFromP2 === false
+      ) {
         console.log("6 P2 Retruco button available");
         p2buttonsDisabler(true, true, false, true, true, true);
       }
-      // P2 Truco
-      if (trucoCallFromP1 === false && trucoCallFromP2 !== true) {
-        console.log("7 P2 Truco button avaible");
-        p2buttonsDisabler(true, false, true, true, true, true);
+
+      // P2 ValeCuatro
+      // p2 retrucocall === true | valecuatrocall === false
+
+      if (retrucoCallFromP1 === true && valeCuatroCall === false) {
+        console.log("7 P2 Vale Cuatro button available");
+        p2buttonsDisabler(true, true, true, false, true, true);
       }
 
       // P2 Envido
@@ -631,17 +647,19 @@ const addEnvidoPoints = function () {
     calcEnvido(player2Cards)
   );
   // if envido is a draw (=== 3), the "hand player" will win
-  if (envidoWinner === 3) {
-    envidoWinner = currentPlayer;
-  }
-  // else, player 1 or 2 will get the points
-  if (envidoWinner === 1) {
-    if (acceptEnvido) p1points += 2;
-    if (envidoEnvidoCall) p1points += 2;
-  }
-  if (envidoWinner === 2) {
-    if (acceptEnvido) p2points += 2;
-    if (envidoEnvidoCall) p2points += 2;
+  if (acceptEnvido === true) {
+    if (envidoWinner === 3) {
+      envidoWinner = currentPlayer;
+    }
+    // else, player 1 or 2 will get the points
+    if (envidoWinner === 1) {
+      if (acceptEnvido) p1points += 2;
+      if (envidoEnvidoCall) p1points += 2;
+    }
+    if (envidoWinner === 2) {
+      if (acceptEnvido) p2points += 2;
+      if (envidoEnvidoCall) p2points += 2;
+    }
   }
   // This function is called at the start of round 2, so points will be added there
   pointsLableP1.textContent = `Puntos ${p1points}/15`;
@@ -967,72 +985,94 @@ acceptButtonP2.addEventListener("click", function () {
 
 rejectButtonP1.addEventListener("click", function () {
   p1buttonsDisabler();
-
+  // Checks round 1, to add envido points, since they are added at the end of round 1.
+  // If the round ends before round one, points it will be added here.
+  if (currentRound === 1) {
+    addEnvidoPoints();
+  }
+  // Display the events, add the points -1 for the rejection
   if (valeCuatroCall) {
     myView.displayEnvidoTrucoEvents(`P1 rechazo el Vale 4`);
     myView.displayGamesEvents(`** El Player 2 gano por rechazo **`, 2);
     p2points += roundpoints();
+    p2points--;
     nextRound();
   } else if (retrucoCallFromP2) {
     myView.displayEnvidoTrucoEvents(`P1 rechazo el Retruco`);
     myView.displayGamesEvents(`** El Player 2 gano por rechazo **`, 2);
     p2points += roundpoints();
+    p2points--;
     nextRound();
   } else if (trucoCallFromP2) {
     myView.displayEnvidoTrucoEvents(`P1 rechazo el Truco`);
     myView.displayGamesEvents(`** El Player 2 gano por rechazo **`, 2);
     p2points += roundpoints();
+    p2points--;
     nextRound();
   }
+
+  // Display the events, add the points for the rejection, and re-changes the value of accept envido to false
+  // Since its false, point will not be added again in another round because of the check in addEnvidoPoints
 
   if (envidoEnvidoCall) {
     myView.displayEnvidoTrucoEvents(`P1 rechazo el Envido Envido`);
     acceptEnvido = false;
     p2points += 2;
-    buttonaction = true;
-    p2buttonsDisabler(true, false, true, true, true, true);
+    p1buttonsDisabler();
+    p1buttonColor();
+    infoSlotP1.style.backgroundColor = "";
+    infoSlotP1.style.borderColor = "";
   } else if (envidoCall) {
     myView.displayEnvidoTrucoEvents(`P1 rechazo el Envido`);
     acceptEnvido = false;
     p2points += 1;
-    buttonaction = true;
-    p2buttonsDisabler(true, false, true, true, true, true);
     switchPlayer();
   }
 });
 
 rejectButtonP2.addEventListener("click", function () {
   p2buttonsDisabler();
-
+  // Checks round 1, to add envido points, since they are added at the end of round 1.
+  // If the round ends before round one, points it will be added here.
+  if (currentRound === 1) {
+    addEnvidoPoints();
+  }
+  // Display the events, add the points -1 for the rejection
   if (valeCuatroCall) {
-    myView.displayCardsEvents(`P2 rechazo el Vale 4`, "_");
+    myView.displayEnvidoTrucoEvents(`P2 rechazo el Vale 4`);
     myView.displayGamesEvents(`** El Player 1 gano por rechazo **`, 1);
     p1points += roundpoints();
+    p1points--;
     nextRound();
   } else if (retrucoCallFromP1) {
-    myView.displayCardsEvents(`P2 rechazo el Retruco`, "_");
+    myView.displayEnvidoTrucoEvents(`P2 rechazo el Retruco`);
     myView.displayGamesEvents(`** El Player 1 gano por rechazo **`, 1);
     p1points += roundpoints();
+    p1points--;
     nextRound();
   } else if (trucoCallFromP1) {
-    myView.displayCardsEvents(`P2 rechazo el Truco`, "_");
+    myView.displayEnvidoTrucoEvents(`P2 rechazo el Truco`);
     myView.displayGamesEvents(`** El Player 1 gano por rechazo **`, 1);
     p1points += roundpoints();
+    p1points--;
     nextRound();
   }
 
+  // Display the events, add the points for the rejection, and re-changes the value of accept envido to false
+  // Since its false, point will not be added again in another round because of the check in addEnvidoPoints
+
   if (envidoEnvidoCall) {
-    myView.displayCardsEvents(`P2 rechazo el Envido Envido`, "_");
+    myView.displayEnvidoTrucoEvents(`P2 rechazo el Envido Envido`);
     acceptEnvido = false;
     p1points += 2;
-    buttonaction = true;
-    p1buttonsDisabler(true, false, true, true, true, true);
+    p2buttonsDisabler();
+    p2buttonColor();
+    infoSlotP2.style.backgroundColor = "";
+    infoSlotP2.style.borderColor = "";
   } else if (envidoCall) {
-    myView.displayCardsEvents(`P2 rechazo el Envido`, "_");
+    myView.displayEnvidoTrucoEvents(`P2 rechazo el Envido`);
     acceptEnvido = false;
     p1points += 1;
-    buttonaction = true;
-    p2buttonsDisabler(true, false, true, true, true, true);
     switchPlayer();
   }
 });
