@@ -37,8 +37,8 @@ const slotR2P2 = document.querySelector(".slotR2P2");
 const slotR3P1 = document.querySelector(".slotR3P1");
 const slotR3P2 = document.querySelector(".slotR3P2");
 // points labels
-const envidoScore1 = document.querySelector(".scoreEnvido1");
-const envidoScore2 = document.querySelector(".scoreEnvido2");
+const envidoScore1 = document.querySelector(".scoreEnvidoValue1");
+const envidoScore2 = document.querySelector(".scoreEnvidoValue2");
 //envido labels
 const pointsLableP1 = document.querySelector(".pointsP1");
 const pointsLableP2 = document.querySelector(".pointsP2");
@@ -67,8 +67,7 @@ let currentPlayer = Math.floor(Math.random() * 2) + 1; // Initial player
 let p1RoundChoice = 0;
 let p2RoundChoice = 0;
 let currentRound = 1;
-let p1roundsWon = 0;
-let p2roundsWon = 0;
+
 let envidoCall = false;
 let envidoEnvidoCall = false;
 let acceptEnvido = false;
@@ -321,8 +320,8 @@ const nextRound = function () {
   slotR3P2.querySelector("img").src = cards.emptycard;
 
   //Envido
-  envidoScore1.textContent = `Envido \n ${calcEnvido(player1Cards)}`;
-  envidoScore2.textContent = `Envido \n ${calcEnvido(player2Cards)}`;
+  envidoScore1.textContent = `${calcEnvido(player1Cards)}`;
+  envidoScore2.textContent = `${calcEnvido(player2Cards)}`;
 
   pointsLableP1.textContent = `Puntos ${p1points}/15`;
   pointsLableP2.textContent = `Puntos ${p2points}/15`;
@@ -364,22 +363,24 @@ const switchPlayer = function () {
     p2buttonsDisabler();
     p2buttonColor();
 
+    //THIS IS CLOSE TO BE FINISHED, JUST THE LAST TOUCHES
+
     if (buttonaction === false) {
       console.log("this round wasnt about a button, it was about a card");
 
       // P1 ValeCuatro
-      if (valeCuatroCall === false) {
-        console.log("P1 Vale Cuatro button available");
+      if (valeCuatroCall === false && retrucoCallFromP1 !== true) {
+        console.log("1 P1 Vale Cuatro button available");
         p1buttonsDisabler(true, true, true, false, true, true);
       }
       // P1 Retruco
-      if (retrucoCallFromP2 === false && retrucoCallFromP1 !== true) {
-        console.log("P1 Retruco button available");
+      if (trucoCallFromP2 === true && valeCuatroCall === false) {
+        console.log("2 P1 Retruco button available");
         p1buttonsDisabler(true, true, false, true, true, true);
       }
       // P1 Truco
       if (trucoCallFromP2 === false && trucoCallFromP1 !== true) {
-        console.log("P1 Truco button avaible");
+        console.log("3 P1 Truco button avaible");
         p1buttonsDisabler(true, false, true, true, true, true);
       }
 
@@ -391,7 +392,7 @@ const switchPlayer = function () {
         trucoCallFromP2 === false &&
         currentRound === 1
       ) {
-        console.log("P1 Envido button avaible");
+        console.log("4 P1 Envido button avaible");
         p1buttonsDisabler(false, false, true, true, true, true);
       }
 
@@ -460,22 +461,23 @@ const switchPlayer = function () {
     if (buttonaction === false) {
       console.log("this round wasnt about a button, it was about a card");
 
-      // if P1 ValeCuatro else if P1 Retruco else if P1 Truco
-
-      if (valeCuatroCall === false) {
-        console.log("P2 Vale Cuatro button available");
+      // P2 ValeCuatro
+      if (valeCuatroCall === false && retrucoCallFromP2 === true) {
+        console.log("5 P2 Vale Cuatro button available");
         p2buttonsDisabler(true, true, true, false, true, true);
       }
-      if (retrucoCallFromP1 === false && retrucoCallFromP2 !== true) {
-        console.log("P2 Retruco button available");
+      // P2 Retruco
+      if (trucoCallFromP1 === true && valeCuatroCall === false) {
+        console.log("6 P2 Retruco button available");
         p2buttonsDisabler(true, true, false, true, true, true);
       }
+      // P2 Truco
       if (trucoCallFromP1 === false && trucoCallFromP2 !== true) {
-        console.log("P2 Truco button avaible");
+        console.log("7 P2 Truco button avaible");
         p2buttonsDisabler(true, false, true, true, true, true);
       }
 
-      // P1 Envido
+      // P2 Envido
 
       if (
         envidoCall === false &&
@@ -483,7 +485,7 @@ const switchPlayer = function () {
         trucoCallFromP1 === false &&
         currentRound === 1
       ) {
-        console.log("P2 Envido button avaible");
+        console.log("8 P2 Envido button avaible");
         p2buttonsDisabler(false, false, true, true, true, true);
       }
 
@@ -622,12 +624,17 @@ const disableEnvidoButtons = function () {
   p2buttonsDisabler(true, false, false, false, true, true);
 };
 
-let envidoWinner = highestEnvido(
-  calcEnvido(player1Cards),
-  calcEnvido(player2Cards)
-);
-
 const addEnvidoPoints = function () {
+  // envidoWinner checks the winner
+  let envidoWinner = highestEnvido(
+    calcEnvido(player1Cards),
+    calcEnvido(player2Cards)
+  );
+  // if envido is a draw (=== 3), the "hand player" will win
+  if (envidoWinner === 3) {
+    envidoWinner = currentPlayer;
+  }
+  // else, player 1 or 2 will get the points
   if (envidoWinner === 1) {
     if (acceptEnvido) p1points += 2;
     if (envidoEnvidoCall) p1points += 2;
@@ -636,10 +643,9 @@ const addEnvidoPoints = function () {
     if (acceptEnvido) p2points += 2;
     if (envidoEnvidoCall) p2points += 2;
   }
-  if (envidoWinner === 3) {
-    envidoWinner = currentPlayer;
-    addEnvidoPoints();
-  }
+  // This function is called at the start of round 2, so points will be added there
+  pointsLableP1.textContent = `Puntos ${p1points}/15`;
+  pointsLableP2.textContent = `Puntos ${p2points}/15`;
 };
 
 const buttonsSwitch = function () {
@@ -919,12 +925,12 @@ acceptButtonP1.addEventListener("click", function () {
   if (envidoEnvidoCall) {
     myView.displayEnvidoTrucoEvents("P1 Envido Envido Aceptado");
     acceptEnvido = true;
-    addEnvidoPoints();
+
     buttonsSwitch();
   } else if (envidoCall) {
     myView.displayEnvidoTrucoEvents("P1 Envido Aceptado");
     acceptEnvido = true;
-    addEnvidoPoints();
+
     buttonsSwitch();
   }
 });
@@ -949,12 +955,12 @@ acceptButtonP2.addEventListener("click", function () {
   if (envidoEnvidoCall) {
     myView.displayEnvidoTrucoEvents("P2 Envido Envido Aceptado");
     acceptEnvido = true;
-    addEnvidoPoints();
+
     buttonsSwitch();
   } else if (envidoCall) {
     myView.displayEnvidoTrucoEvents("P2 Envido Aceptado");
     acceptEnvido = true;
-    addEnvidoPoints();
+
     buttonsSwitch();
   }
 });
@@ -1048,11 +1054,26 @@ const roundOne = function () {
   const checkRoundOne = function () {
     // Aca un if igual para detectar envido y truco
     if (p1RoundChoice !== 0 && p2RoundChoice !== 0 && currentRound === 1) {
+      console.log("antes del envido points");
+      addEnvidoPoints();
+      console.log("despues del envido points");
+      envidoCall = false;
+      envidoEnvidoCall = false;
+      console.log("despues de los camvbios de envido points");
+      console.log(
+        "cambio el current round a 2 antes de los switchs",
+        currentRound,
+        typeof currentRound
+      );
+      currentRound = 2;
+      console.log(
+        "cambio el current round a 2 antes de los switchs",
+        currentRound,
+        typeof currentRound
+      );
       // console.log("Ya detecto las 2 cartas iguales");
       clearInterval(roundOneTimer);
       // Reinicio los botones de envido para poder usar aceptar y reject con truco
-      envidoCall = false;
-      envidoEnvidoCall = false;
 
       let winner = checkRoundWinner(p1RoundChoice, p2RoundChoice);
 
@@ -1065,16 +1086,18 @@ const roundOne = function () {
       if (+winner === 1) {
         // console.log("el proximo round juega el P1");
         myView.displayRoundEvents(`* El Player 1 gano primera*`);
+        console.log("donde hace este log");
         p1roundsWon++;
-        checkRightPlayer(currentPlayer, p1);
         roundTwo();
+        checkRightPlayer(currentPlayer, p1);
+        console.log("donde hace este segundo log");
       }
       if (+winner === 2) {
         // console.log("el proximo round juega el P2");
         myView.displayRoundEvents(`* El Player 2 gano primera*`);
         p2roundsWon++;
-        checkRightPlayer(currentPlayer, p2);
         roundTwo();
+        checkRightPlayer(currentPlayer, p2);
       }
     }
   };
@@ -1090,6 +1113,8 @@ const roundTwo = function () {
   p1RoundChoice = 0;
   p2RoundChoice = 0;
   currentRound = 2;
+  switchPlayer();
+  switchPlayer();
 
   console.log("Round Two Starts");
   // console.log(`current Payer: ${currentPlayer}`);
@@ -1137,7 +1162,7 @@ const roundThree = function () {
 
   //me falto 1 if, que sea cartas iguales en 3ra ronda, y gana el que gano 1er mano
   const checkRoundThree = function () {
-    console.log("Check Round Three Starts");
+    //console.log("Check Round Three Starts");
 
     if (p1RoundChoice !== 0 && p2RoundChoice !== 0 && currentRound === 3) {
       console.log("Ya detecto las 2 cartas iguales");

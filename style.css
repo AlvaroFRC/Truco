@@ -211,6 +211,27 @@
   height: 40px;
   border-radius: 0.5cm;
 }
+
+.btn {
+  border: 2px solid #414141;
+  background-color: #dbdbdb;
+  color: #333333;
+}
+
+.btn:hover {
+  border: 4px solid green;
+  background-color: #00aacc;
+  color: #444444;
+  padding: 5px 10px;
+}
+
+.btn:disabled,
+.btn[disabled] {
+  border: 1px solid #a1a1a1;
+  background-color: #e2e2e2;
+  color: #818181;
+}
+
 /*cambiar esto a las 2 playerard2*/
 .cardBtn {
   background-color: rgb(255, 255, 255);
