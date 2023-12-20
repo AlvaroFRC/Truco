@@ -671,7 +671,7 @@ const buttonsSwitch = function () {
 };
 
 const roundpoints = function () {
-  totalPoints = 0;
+  var totalPoints = 0;
   if (trucoCallFromP1 === false && trucoCallFromP2 === false) {
     //"no se canto truco, puntos +1 | first exit");
     totalPoints += 1;
