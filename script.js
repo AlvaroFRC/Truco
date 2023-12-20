@@ -366,11 +366,8 @@ const switchPlayer = function () {
     //THIS IS CLOSE TO BE FINISHED, JUST THE LAST TOUCHES
 
     if (buttonaction === false) {
-      console.log("this round wasnt about a button, it was about a card");
-
       // P1 Truco
       if (trucoCallFromP2 === false && trucoCallFromP1 === false) {
-        console.log("1 P1 Truco button avaible");
         p1buttonsDisabler(true, false, true, true, true, true);
       }
       // P1 Retruco
@@ -380,15 +377,12 @@ const switchPlayer = function () {
         valeCuatroCall === false &&
         retrucoCallFromP1 === false
       ) {
-        console.log("2 P1 Retruco button available");
         p1buttonsDisabler(true, true, false, true, true, true);
       }
 
       // P1 ValeCuatro
-      // p2 retrucocall === true | valecuatrocall === false
 
       if (retrucoCallFromP2 === true && valeCuatroCall === false) {
-        console.log("3 P1 Vale Cuatro button available");
         p1buttonsDisabler(true, true, true, false, true, true);
       }
 
@@ -400,7 +394,6 @@ const switchPlayer = function () {
         trucoCallFromP2 === false &&
         currentRound === 1
       ) {
-        console.log("4 P1 Envido button avaible");
         p1buttonsDisabler(false, false, true, true, true, true);
       }
 
@@ -467,11 +460,8 @@ const switchPlayer = function () {
     p1buttonColor();
 
     if (buttonaction === false) {
-      console.log("this round wasnt about a button, it was about a card");
-
       // P2 Truco
       if (trucoCallFromP1 === false && trucoCallFromP2 === false) {
-        console.log("5 P2 Truco button avaible");
         p2buttonsDisabler(true, false, true, true, true, true);
       }
       // P1 Retruco
@@ -481,15 +471,12 @@ const switchPlayer = function () {
         valeCuatroCall === false &&
         retrucoCallFromP2 === false
       ) {
-        console.log("6 P2 Retruco button available");
         p2buttonsDisabler(true, true, false, true, true, true);
       }
 
       // P2 ValeCuatro
-      // p2 retrucocall === true | valecuatrocall === false
 
       if (retrucoCallFromP1 === true && valeCuatroCall === false) {
-        console.log("7 P2 Vale Cuatro button available");
         p2buttonsDisabler(true, true, true, false, true, true);
       }
 
@@ -501,7 +488,6 @@ const switchPlayer = function () {
         trucoCallFromP1 === false &&
         currentRound === 1
       ) {
-        console.log("8 P2 Envido button avaible");
         p2buttonsDisabler(false, false, true, true, true, true);
       }
 
@@ -667,41 +653,55 @@ const addEnvidoPoints = function () {
 };
 
 const buttonsSwitch = function () {
+  console.log(buttonsPressCounter);
   /** This function checks the amount of times a button was pressed,
    * to check if it needs to switch player when accepted or rejected */
   if (buttonsPressCounter % 2 !== 0) {
+    console.log("se hace switch");
     switchPlayer();
-    buttonsPressCounter = 0;
   } else {
+    console.log("no se hace switch(dobleswticht)");
     switchPlayer();
     switchPlayer();
-    buttonsPressCounter = 0;
   }
+  buttonsPressCounter = 0;
+  console.log(buttonsPressCounter);
 };
 
 const roundpoints = function () {
   totalPoints = 0;
   if (trucoCallFromP1 === false && trucoCallFromP2 === false) {
-    console.log("no se canto truco, puntos +1 | first exit");
+    //"no se canto truco, puntos +1 | first exit");
     totalPoints += 1;
   } else {
-    console.log("si se canto truco, puntos +2 | second exit");
+    //"si se canto truco, puntos +2 | second exit");
     totalPoints += 2;
     if (retrucoCallFromP1 === false && retrucoCallFromP2 === false) {
-      console.log("no se canto retruco, puntos +0 | third exit");
+      //"no se canto retruco, puntos +0 | third exit");
     } else {
-      console.log("si se canto retruco, puntos + 1 | fourth exit");
+      //"si se canto retruco, puntos + 1 | fourth exit");
       totalPoints += 1;
       if (valeCuatroCall === false) {
-        console.log("no se canto retruco, puntos +0 | fifth exit");
+        //"no se canto retruco, puntos +0 | fifth exit");
       } else {
-        console.log("si se canto retruco, puntos + 1 | sixth exit");
+        //"si se canto retruco, puntos + 1 | sixth exit");
         totalPoints += 1;
       }
     }
   }
-  console.log("totalpoints:", totalPoints);
+
   return totalPoints;
+};
+
+const finishedGame = function () {
+  // Checks if the player reached 15 points, if true, the player wins the game
+
+  if (p1points > 14) {
+    alert("El player 1 llego a 15, acaba de ganar");
+  }
+  if (p2points > 14) {
+    alert("El player 2 llego a 15, acaba de ganar");
+  }
 };
 
 class playerCardsClass {
@@ -768,7 +768,6 @@ envidoButtonP1.addEventListener("click", function () {
       "red"
     );
     envidoEnvidoCall = true;
-    buttonsPressCounter++;
   } else {
     myView.displayEnvidoTrucoEvents(`P1 Canto Envido`);
     p2buttonsDisabler(false, true, true, true, false, false);
@@ -781,13 +780,14 @@ envidoButtonP1.addEventListener("click", function () {
       "red"
     );
     envidoCall = true;
-    buttonsPressCounter++;
   }
-  buttonaction = true;
-  switchPlayer();
   btnP2card1.disabled = true;
   btnP2card2.disabled = true;
   btnP2card3.disabled = true;
+  // Button Switch player
+  buttonsPressCounter++;
+  buttonaction = true;
+  switchPlayer();
 });
 
 envidoButtonP2.addEventListener("click", function () {
@@ -807,7 +807,6 @@ envidoButtonP2.addEventListener("click", function () {
       "red"
     );
     envidoEnvidoCall = true;
-    buttonsPressCounter++;
   } else {
     myView.displayEnvidoTrucoEvents(`P2 Canto Envido`);
     p1buttonsDisabler(false, true, true, true, false, false);
@@ -820,8 +819,9 @@ envidoButtonP2.addEventListener("click", function () {
       "red"
     );
     envidoCall = true;
-    buttonsPressCounter++;
   }
+  // Button Switch player
+  buttonsPressCounter++;
   buttonaction = true;
   switchPlayer();
 });
@@ -835,8 +835,9 @@ trucoButtonP1.addEventListener("click", function () {
   p2buttonsDisabler(true, true, false, true, false, false);
   p2buttonColor("lightgray", "lightgray", "green", "lightgray", "green", "red");
   trucoCallFromP1 = true;
-  buttonaction = true;
+  // Button Switch player
   buttonsPressCounter++;
+  buttonaction = true;
   switchPlayer();
 });
 
@@ -849,8 +850,9 @@ trucoButtonP2.addEventListener("click", function () {
   p1buttonsDisabler(true, true, false, true, false, false);
   p1buttonColor("lightgray", "lightgray", "green", "lightgray", "green", "red");
   trucoCallFromP2 = true;
-  buttonaction = true;
+  // Button Switch player
   buttonsPressCounter++;
+  buttonaction = true;
   switchPlayer();
 });
 
@@ -863,8 +865,9 @@ reTrucoButtonP1.addEventListener("click", function () {
   p2buttonsDisabler(true, true, true, false, false, false);
   p2buttonColor("lightgray", "lightgray", "lightgray", "green", "green", "red");
   retrucoCallFromP1 = true;
-  buttonaction = true;
+  // Button Switch player
   buttonsPressCounter++;
+  buttonaction = true;
   switchPlayer();
 });
 
@@ -877,8 +880,9 @@ reTrucoButtonP2.addEventListener("click", function () {
   p1buttonsDisabler(true, true, true, false, false, false);
   p1buttonColor("lightgray", "lightgray", "lightgray", "green", "green", "red");
   retrucoCallFromP2 = true;
-  buttonaction = true;
+  // Button Switch player
   buttonsPressCounter++;
+  buttonaction = true;
   switchPlayer();
 });
 
@@ -898,8 +902,9 @@ valeCuatroButtonP1.addEventListener("click", function () {
     "red"
   );
   valeCuatroCall = true;
-  buttonaction = true;
+  // Button Switch player
   buttonsPressCounter++;
+  buttonaction = true;
   switchPlayer();
 });
 
@@ -919,68 +924,55 @@ valeCuatroButtonP2.addEventListener("click", function () {
     "red"
   );
   valeCuatroCall = true;
-  buttonaction = true;
+  // Button Switch player
   buttonsPressCounter++;
+  buttonaction = true;
   switchPlayer();
 });
 
 acceptButtonP1.addEventListener("click", function () {
-  buttonaction = true;
   p1buttonColor();
   p1buttonsDisabler();
 
   if (valeCuatroCall) {
     myView.displayEnvidoTrucoEvents("P1 Vale Cuatro Aceptado");
-    buttonsSwitch();
   } else if (retrucoCallFromP2) {
     myView.displayEnvidoTrucoEvents("P1 Retruco Aceptado");
-    buttonsSwitch();
   } else if (trucoCallFromP2) {
     myView.displayEnvidoTrucoEvents("P1 Truco Aceptado");
-    buttonsSwitch();
   }
 
   if (envidoEnvidoCall) {
     myView.displayEnvidoTrucoEvents("P1 Envido Envido Aceptado");
     acceptEnvido = true;
-
-    buttonsSwitch();
   } else if (envidoCall) {
     myView.displayEnvidoTrucoEvents("P1 Envido Aceptado");
     acceptEnvido = true;
-
-    buttonsSwitch();
   }
+  buttonsSwitch();
 });
 
 acceptButtonP2.addEventListener("click", function () {
-  buttonaction = true;
   p2buttonColor();
   infoSlotP2.style.borderColor = "black";
   p2buttonsDisabler();
 
   if (valeCuatroCall) {
     myView.displayEnvidoTrucoEvents("P2 Vale Cuatro Aceptado");
-    buttonsSwitch();
   } else if (retrucoCallFromP1) {
     myView.displayEnvidoTrucoEvents("P2 Retruco Aceptado");
-    buttonsSwitch();
   } else if (trucoCallFromP1) {
     myView.displayEnvidoTrucoEvents("P2 Truco Aceptado");
-    buttonsSwitch();
   }
 
   if (envidoEnvidoCall) {
     myView.displayEnvidoTrucoEvents("P2 Envido Envido Aceptado");
     acceptEnvido = true;
-
-    buttonsSwitch();
   } else if (envidoCall) {
     myView.displayEnvidoTrucoEvents("P2 Envido Aceptado");
     acceptEnvido = true;
-
-    buttonsSwitch();
   }
+  buttonsSwitch();
 });
 
 rejectButtonP1.addEventListener("click", function () {
@@ -1026,8 +1018,8 @@ rejectButtonP1.addEventListener("click", function () {
     myView.displayEnvidoTrucoEvents(`P1 rechazo el Envido`);
     acceptEnvido = false;
     p2points += 1;
-    switchPlayer();
   }
+  buttonsSwitch();
 });
 
 rejectButtonP2.addEventListener("click", function () {
@@ -1073,8 +1065,8 @@ rejectButtonP2.addEventListener("click", function () {
     myView.displayEnvidoTrucoEvents(`P2 rechazo el Envido`);
     acceptEnvido = false;
     p1points += 1;
-    switchPlayer();
   }
+  buttonsSwitch();
 });
 
 // Game Rounds
@@ -1082,38 +1074,26 @@ rejectButtonP2.addEventListener("click", function () {
 const roundOne = function () {
   console.log("Round One Starts");
 
-  // console.log(`current Player: ${currentPlayer}`);
   p1RoundChoice = 0;
   p2RoundChoice = 0;
 
   let roundOneTimer;
   currentRound = 1;
 
-  //addEnvidoPoints is working good
+  finishedGame();
 
   const checkRoundOne = function () {
     // Aca un if igual para detectar envido y truco
     if (p1RoundChoice !== 0 && p2RoundChoice !== 0 && currentRound === 1) {
-      console.log("antes del envido points");
       addEnvidoPoints();
-      console.log("despues del envido points");
+
+      // Reinicio los botones de envido para poder usar aceptar y reject con truco
       envidoCall = false;
       envidoEnvidoCall = false;
-      console.log("despues de los camvbios de envido points");
-      console.log(
-        "cambio el current round a 2 antes de los switchs",
-        currentRound,
-        typeof currentRound
-      );
+
       currentRound = 2;
-      console.log(
-        "cambio el current round a 2 antes de los switchs",
-        currentRound,
-        typeof currentRound
-      );
-      // console.log("Ya detecto las 2 cartas iguales");
+
       clearInterval(roundOneTimer);
-      // Reinicio los botones de envido para poder usar aceptar y reject con truco
 
       let winner = checkRoundWinner(p1RoundChoice, p2RoundChoice);
 
@@ -1124,16 +1104,12 @@ const roundOne = function () {
         roundTwo();
       }
       if (+winner === 1) {
-        // console.log("el proximo round juega el P1");
         myView.displayRoundEvents(`* El Player 1 gano primera*`);
-        console.log("donde hace este log");
         p1roundsWon++;
         roundTwo();
         checkRightPlayer(currentPlayer, p1);
-        console.log("donde hace este segundo log");
       }
       if (+winner === 2) {
-        // console.log("el proximo round juega el P2");
         myView.displayRoundEvents(`* El Player 2 gano primera*`);
         p2roundsWon++;
         roundTwo();
@@ -1141,7 +1117,7 @@ const roundOne = function () {
       }
     }
   };
-  // console.log("---------------------------------------------------------");
+
   // Assign the interval ID to roundOneTimer
   roundOneTimer = setInterval(checkRoundOne, 10);
   // Call the function to start checking variables
@@ -1157,11 +1133,11 @@ const roundTwo = function () {
   switchPlayer();
 
   console.log("Round Two Starts");
-  // console.log(`current Payer: ${currentPlayer}`);
+
+  finishedGame();
 
   const checkRoundTwo = function () {
     if (p1RoundChoice !== 0 && p2RoundChoice !== 0 && currentRound === 2) {
-      // console.log("Ya detecto las 2 cartas iguales");
       clearInterval(roundTwoTimer);
       let winner = checkRoundWinner(p1RoundChoice, p2RoundChoice);
       if (winner === 3) {
@@ -1170,14 +1146,12 @@ const roundTwo = function () {
         roundThree();
       }
       if (winner === p1) {
-        // console.log("el proximo round juega el P1");
         myView.displayRoundEvents(`** El Player 1 gano segunda **`);
         p1roundsWon++;
         checkRightPlayer(currentPlayer, p1);
         roundThree();
       }
       if (winner === p2) {
-        // console.log("el proximo round juega el P2");
         myView.displayRoundEvents(`** El Player 2 gano segunda **`);
         p2roundsWon++;
         checkRightPlayer(currentPlayer, p2);
@@ -1200,22 +1174,17 @@ const roundThree = function () {
   p2RoundChoice = 0;
   currentRound = 3;
 
-  //me falto 1 if, que sea cartas iguales en 3ra ronda, y gana el que gano 1er mano
-  const checkRoundThree = function () {
-    //console.log("Check Round Three Starts");
+  finishedGame();
 
+  const checkRoundThree = function () {
     if (p1RoundChoice !== 0 && p2RoundChoice !== 0 && currentRound === 3) {
-      console.log("Ya detecto las 2 cartas iguales");
       clearInterval(roundThreeTimer);
       let winner = checkRoundWinner(p1RoundChoice, p2RoundChoice);
       if (winner === 3) {
-        console.log(`Gana el Player:${currentPlayer}`);
-        console.log("Round Three ends");
         myView.displayGamesEvents(
           `*** El Player${currentPlayer} gano tercera`,
           currentPlayer
         );
-
         if (currentPlayer === 1) {
           p1points += roundpoints();
         } else {
@@ -1225,16 +1194,12 @@ const roundThree = function () {
         nextRound();
       }
       if (winner === p1) {
-        console.log("Gana el Player: 1");
-        console.log("Round Three ends");
         myView.displayRoundEvents(`*** El Player 1 gano tercera ***`);
         myView.displayGamesEvents("*** El Player 1 gano en tercera ***", 1);
         p1points += roundpoints();
         nextRound();
       }
       if (winner === p2) {
-        console.log("Gana el Player: 2");
-        console.log("Round Three ends");
         myView.displayRoundEvents(`*** El Player 2 gano tercera ***`);
         myView.displayGamesEvents("*** El Player 2 gano en tercera ***", 2);
         p2points += roundpoints();
@@ -1247,16 +1212,13 @@ const roundThree = function () {
   roundThreeTimer = setInterval(checkRoundThree, 10);
   // Call the function to start checking variables
 
-  //console.log(`Points P1: "${p1roundsWon}", Points P2: "${p2roundsWon}"`);
-
-  //console.log(`current Player: ${currentPlayer}`);
   if (p1roundsWon === 0 || p2roundsWon === 0) {
     // Algun player no gano ninguno de los 2 rounds, game over
     // Call nextround()
     p1roundsWon > p2roundsWon
       ? myView.displayRoundEvents(`** El Player 1 gano en segunda **`)
       : myView.displayRoundEvents(`** El Player 2 gano en segunda **`);
-    //console.log("Ya no metio ningun punto y perdio los 2 rounds");
+    //Ya no metio ningun punto y perdio los 2 rounds");
 
     p1roundsWon > p2roundsWon
       ? myView.displayGamesEvents(`** El Player 1 gano en segunda **`, 1)
@@ -1272,12 +1234,7 @@ const roundThree = function () {
   }
 
   if (p1roundsWon === 11 || p2roundsWon === 11) {
-    // Gano el round 1 pero empato el 2 do, game over
-    // Call nextround()
-    p1roundsWon > p2roundsWon
-      ? console.log("gano el p1")
-      : console.log(" gano el p2");
-    console.log("Empate en round 1 y desempate en el 2, termina el round");
+    //("Empate en round 1 y desempate en el 2, termina el round");
     myView.displayRoundEvents(
       p1roundsWon > p2roundsWon
         ? "** El Player 1 gano en segunda **"
@@ -1298,12 +1255,7 @@ const roundThree = function () {
   }
 
   if (p1roundsWon === 6 || p2roundsWon === 6) {
-    // Empate en el 1er round, pero alguien gano el 2do, game over
-    // Call nextround()
-    p1roundsWon > p2roundsWon
-      ? console.log("gano el p1")
-      : console.log(" gano el p2");
-    console.log("Gano el round 1 pero empato el 2 do, terminando el round");
+    //"Gano el round 1 pero empato el 2 do, terminando el round");
     myView.displayRoundEvents(
       p1roundsWon > p2roundsWon
         ? "** El Player 1 gano en segunda **"
@@ -1325,14 +1277,11 @@ const roundThree = function () {
 
   if (p1roundsWon === 1 && p2roundsWon === 1) {
     // Cada uno gano un round, juego round 3
-    console.log("Cada uno gano 1 round, go round 3");
     checkRoundThree();
   }
 
   if (p1roundsWon === 15 && p2roundsWon === 15) {
     // Empates en round 1 y 2, jugar round 3 y desempate
-    // En caso de empate en round 3.. gana el active player
-    console.log("Empates en round 1 y 2, go round 3");
     checkRoundThree();
   }
 };
@@ -1343,12 +1292,3 @@ newGame();
 btnNewGame.addEventListener("click", function () {
   window.location.reload();
 });
-
-// TODO Aceptar truco en 1ra, tmb hace que se acepte envido de nuevo, si fue cantado antes
-
-// Un contador.. puede ser con un timer 1ves por segundo para que no haga falta spam, que revise si el score de p1 o p2 es === 15, si en lagun momento es igual a 15, ese player gano.. puedo hacer aparecer algun modal window, y que te haga empezar un round nuevo
-
-// TODO Mejorar la UI
-// Seleccionar Font, ajustar tamaños, colores
-// Acomodar margins // paddins
-// Cambiar diseño de botones cuando estan disabled

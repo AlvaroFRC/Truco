@@ -2,6 +2,10 @@ let gameEvents = [];
 let games = [];
 
 export default class View {
+  //Round actions events events
+
+  // Markup
+
   generateMarkup = function (movements) {
     const containerMovements = document.querySelector(".movements");
     containerMovements.innerHTML = "";
@@ -37,7 +41,9 @@ export default class View {
       containerMovements.insertAdjacentHTML("afterbegin", html);
     });
   };
-  // beforebegin / afterbegin / beforeend / afterend
+
+  // Displays
+
   displayCardsEvents = function (info, cardname = "") {
     let round = false;
     // Create an object with info and cardname properties
@@ -57,10 +63,15 @@ export default class View {
   };
 
   displayRoundEvents = function (info) {
-    let cardP1Index = gameEvents.length - 2;
-    let cardP2Index = gameEvents.length - 1;
-    let card1 = gameEvents[cardP1Index]["cardname"];
-    let card2 = gameEvents[cardP2Index]["cardname"];
+    // Copy from the gameEvents to filter
+    let cardVsCard = [...gameEvents];
+    // Filtered copy to get the card pictures easy
+    const filteredArray = cardVsCard.filter((obj) => obj.round !== "action");
+    // Cards info for display
+    let cardP1Index = filteredArray.length - 2;
+    let cardP2Index = filteredArray.length - 1;
+    let card1 = filteredArray[cardP1Index]["cardname"];
+    let card2 = filteredArray[cardP2Index]["cardname"];
     let round = true;
     // Create an object with info and cardname properties
     const event = { info, round, card1, card2 };
@@ -68,6 +79,10 @@ export default class View {
     gameEvents.push(event);
     this.generateMarkup(gameEvents);
   };
+
+  //Match result events
+
+  //Markup
 
   generateGamesMarkup = function (movements, playerNumber) {
     const containerMovements = document.querySelector(".games");
@@ -90,6 +105,7 @@ export default class View {
     });
   };
 
+  //Display game events
   displayGamesEvents = function (info, playerNumber) {
     // Create an object with info and cardname properties
     const event = { info, playerNumber };
