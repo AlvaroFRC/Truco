@@ -18,7 +18,7 @@ export default class View {
       //console.log("arr", arr);
 
       if (mov["round"] === true && mov["card2"] !== undefined) {
-        round = `<img src="${mov["card1"]}" alt="round card" class="smallImage">  VS  <img src="${mov["card2"]}" alt="round card" class="smallImage">`;
+        round = `<img src="${mov["card1"]}" alt="round card" class="smallImage"> VS <img src="${mov["card2"]}" alt="round card" class="smallImage">`;
         //Esto lo voy a cambiar, y que si esta en esas condiciones, saque la foto desde las jugadas,
       }
       if (mov["round"] === true && mov["card2"] === undefined) {
@@ -34,9 +34,8 @@ export default class View {
 
       const html = `
           <div class="movements__row">
-          <div class="movements__value">${mov["info"]}</div>
-            ${round}
-          </div>
+          <div class="movements__value">${mov["info"]}${round}</div>
+       
         `;
       containerMovements.insertAdjacentHTML("afterbegin", html);
     });
@@ -97,7 +96,7 @@ export default class View {
       //console.log("arr", arr);
       const html = `
           <div class="games__row p${mov["playerNumber"]}win">
-          <div class="games__value">Partido N° ${i + 1}: ${mov["info"]}</div>
+          <div class="games__value">🃏 Match N° ${i + 1}: ${mov["info"]}</div>
 
           </div>
         `;
