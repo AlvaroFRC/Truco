@@ -67,6 +67,8 @@ let currentPlayer = Math.floor(Math.random() * 2) + 1; // Initial player
 let p1RoundChoice = 0;
 let p2RoundChoice = 0;
 let currentRound = 1;
+let p1roundsWon = 0;
+let p2roundsWon = 0;
 
 let envidoCall = false;
 let envidoEnvidoCall = false;
