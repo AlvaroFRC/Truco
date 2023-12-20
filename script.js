@@ -783,13 +783,13 @@ envidoButtonP1.addEventListener("click", function () {
     );
     envidoCall = true;
   }
-  btnP2card1.disabled = true;
-  btnP2card2.disabled = true;
-  btnP2card3.disabled = true;
   // Button Switch player
   buttonsPressCounter++;
   buttonaction = true;
   switchPlayer();
+  btnP2card1.disabled = true;
+  btnP2card2.disabled = true;
+  btnP2card3.disabled = true;
 });
 
 envidoButtonP2.addEventListener("click", function () {
@@ -823,9 +823,13 @@ envidoButtonP2.addEventListener("click", function () {
     envidoCall = true;
   }
   // Button Switch player
+
   buttonsPressCounter++;
   buttonaction = true;
   switchPlayer();
+  btnP1card1.disabled = true;
+  btnP1card2.disabled = true;
+  btnP1card3.disabled = true;
 });
 
 trucoButtonP1.addEventListener("click", function () {
@@ -841,6 +845,9 @@ trucoButtonP1.addEventListener("click", function () {
   buttonsPressCounter++;
   buttonaction = true;
   switchPlayer();
+  btnP2card1.disabled = true;
+  btnP2card2.disabled = true;
+  btnP2card3.disabled = true;
 });
 
 trucoButtonP2.addEventListener("click", function () {
@@ -856,6 +863,9 @@ trucoButtonP2.addEventListener("click", function () {
   buttonsPressCounter++;
   buttonaction = true;
   switchPlayer();
+  btnP1card1.disabled = true;
+  btnP1card2.disabled = true;
+  btnP1card3.disabled = true;
 });
 
 reTrucoButtonP1.addEventListener("click", function () {
@@ -871,6 +881,9 @@ reTrucoButtonP1.addEventListener("click", function () {
   buttonsPressCounter++;
   buttonaction = true;
   switchPlayer();
+  btnP2card1.disabled = true;
+  btnP2card2.disabled = true;
+  btnP2card3.disabled = true;
 });
 
 reTrucoButtonP2.addEventListener("click", function () {
@@ -886,6 +899,9 @@ reTrucoButtonP2.addEventListener("click", function () {
   buttonsPressCounter++;
   buttonaction = true;
   switchPlayer();
+  btnP1card1.disabled = true;
+  btnP1card2.disabled = true;
+  btnP1card3.disabled = true;
 });
 
 valeCuatroButtonP1.addEventListener("click", function () {
@@ -908,6 +924,9 @@ valeCuatroButtonP1.addEventListener("click", function () {
   buttonsPressCounter++;
   buttonaction = true;
   switchPlayer();
+  btnP2card1.disabled = true;
+  btnP2card2.disabled = true;
+  btnP2card3.disabled = true;
 });
 
 valeCuatroButtonP2.addEventListener("click", function () {
@@ -930,6 +949,9 @@ valeCuatroButtonP2.addEventListener("click", function () {
   buttonsPressCounter++;
   buttonaction = true;
   switchPlayer();
+  btnP1card1.disabled = true;
+  btnP1card2.disabled = true;
+  btnP1card3.disabled = true;
 });
 
 acceptButtonP1.addEventListener("click", function () {

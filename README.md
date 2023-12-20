@@ -1,5 +1,5 @@
-
 # Truco Argentino
+
 ##### Learning code
 
 This is a code to practice Javscript, with a basic HTML/CSS structure, to be able to see what I need. This can be improved later, since it will have all the tags ready to be changed into something better.
@@ -28,22 +28,12 @@ Reject. Rejects the truco and the opponent pair wins the round.
 Accept. Accepts the bet that will be decided at the end of the round.
 Retruco, Worth four. Raises the bet and passes the turn to the opponent to decide.
 
+### Point system
+
+The game has a working points system. When a player reaches 15 points, wins the game.
+
 ## TODO in the code:
 
-### Enable buttons on switches
-Retruco, worth four, and other calls, should be able to make at any time of the rounds, so i need to implement a way that the switch of the player enables the correct buttons for the correct flow of the game.
-
-### Points
-The "envido", "truco", and other calls, are worth different amount of points, and the point system is implemented. The counters need to be adjusted, and the points implemented to check who wins the game at 15 or 30
-
-### UI
-The current version of the game doesn't have any HTML / CSS design. This needs to be implemented.
-
 ### Refactor
-Since the game is still being coded, lots of things are repeated, or coded to be able to stop bugs easily, when I reach V 1.0, the game will need a refactor to change a lot of repetitive code and things that can be simplified.
 
-
-
-
-
-
+Since the game is still being coded, lots of things are repeated, or coded to be able to spot bugs easily, when I reach V 1.0, the game will need a refactor to change a lot of repetitive code and things that can be simplified.
